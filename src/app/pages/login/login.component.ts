@@ -14,7 +14,8 @@ export class LoginComponent {
   public password = '';
   private router = inject(Router);
 
-  public login(): void {
+  public login(event: Event): void {
+    event.preventDefault();
     // Navegar al home cuando se presiona el botón
     this.router.navigate(['/home']);
   }
