@@ -2,13 +2,13 @@
   <div class="login-card">
     <h1>Iniciar Sesión</h1>
 
-    <form (ngSubmit)="login($event)">
+    <form [formGroup]="form">
       <div class="form-group">
         <label for="username">Usuario</label>
         <input
           type="text"
           id="username"
-          [(ngModel)]="username"
+          formControlName="username"
           placeholder="Ingrese su usuario"
           required
         />
@@ -19,13 +19,13 @@
         <input
           type="password"
           id="password"
-          [(ngModel)]="password"
+          formControlName="password"
           placeholder="Ingrese su contraseña"
           required
         />
       </div>
 
-      <button type="submit" class="login-button">Ingresar</button>
+      <button type="button" (click)="login()" class="login-button">Ingresar</button>
     </form>
   </div>
 </div>
