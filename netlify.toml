@@ -5,6 +5,12 @@ publish = "dist/financial-organizer-front/browser"
 [build.environment]
 NODE_VERSION = "20"
 
+[functions]
+node_bundler = "esbuild"
+
+[[plugins]]
+package = "@netlify/angular-runtime"
+
 [[redirects]]
 from = "/*"
 to = "/index.html"
@@ -33,9 +39,3 @@ Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=
 
 # Content Security Policy (ajusta según tu app)
 Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'"
-
-[functions]
-node_bundler = "esbuild"
-
-[[plugins]]
-package = "@netlify/angular-runtime"
