@@ -16,26 +16,26 @@ from = "/*"
 to = "/index.html"
 status = 200
 
-[[headers]]
-for = "/*"
-[headers.values]
-# HSTS - Forzar HTTPS siempre
-Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+# [[headers]]
+# for = "/*"
+# [headers.values]
+# # HSTS - Forzar HTTPS siempre
+# Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
 
-# Prevenir MIME sniffing
-X-Content-Type-Options = "nosniff"
+# # Prevenir MIME sniffing
+# X-Content-Type-Options = "nosniff"
 
-# Prevenir clickjacking
-X-Frame-Options = "DENY"
+# # Prevenir clickjacking
+# X-Frame-Options = "DENY"
 
-# XSS Protection (legacy pero no hace daño)
-X-XSS-Protection = "1; mode=block"
+# # XSS Protection (legacy pero no hace daño)
+# X-XSS-Protection = "1; mode=block"
 
-# Referrer Policy
-Referrer-Policy = "strict-origin-when-cross-origin"
+# # Referrer Policy
+# Referrer-Policy = "strict-origin-when-cross-origin"
 
-# Permissions Policy (bloquear funciones innecesarias)
-Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+# # Permissions Policy (bloquear funciones innecesarias)
+# Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
 
-# Content Security Policy (ajusta según tu app)
-Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'"
+# # Content Security Policy (ajusta según tu app)
+# Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'"
