@@ -1,0 +1,36 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Círculo principal -->
+  <circle cx="100" cy="100" r="80" stroke="url(#grad)" stroke-width="3" fill="none"/>
+  
+  <!-- Barras de crecimiento (representan gráfico financiero) -->
+  <rect x="60" y="90" width="12" height="40" fill="url(#grad)" rx="2" opacity="0.7"/>
+  <rect x="78" y="75" width="12" height="55" fill="url(#grad)" rx="2" opacity="0.8"/>
+  <rect x="96" y="60" width="12" height="70" fill="url(#grad)" rx="2" opacity="0.9"/>
+  <rect x="114" y="45" width="12" height="85" fill="url(#grad)" rx="2"/>
+  
+  <!-- Línea de tendencia ascendente sobre las barras -->
+  <path d="M 66 95 L 84 80 L 102 65 L 120 50" 
+        stroke="#764ba2" 
+        stroke-width="2.5" 
+        stroke-dasharray="4,4"
+        stroke-linecap="round"/>
+  
+  <!-- Flecha pequeña al final de la tendencia -->
+  <path d="M 115 55 L 120 50 L 120 55" 
+        stroke="#764ba2" 
+        stroke-width="2.5" 
+        fill="none" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  
+  <!-- Texto "FS" centrado y profesional -->
+  <text x="100" y="160" font-family="Arial, sans-serif" font-size="42" font-weight="700" 
+        fill="url(#grad)" text-anchor="middle">FS</text>
+</svg>

@@ -1,0 +1,29 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo del círculo -->
+  <circle cx="256" cy="256" r="256" fill="url(#iconGrad)"/>
+  
+  <!-- Barras de crecimiento simplificadas y más gruesas -->
+  <rect x="140" y="240" width="40" height="120" fill="white" rx="6" opacity="0.85"/>
+  <rect x="195" y="200" width="40" height="160" fill="white" rx="6" opacity="0.9"/>
+  <rect x="250" y="160" width="40" height="200" fill="white" rx="6" opacity="0.95"/>
+  <rect x="305" y="120" width="40" height="240" fill="white" rx="6"/>
+  
+  <!-- Flecha de crecimiento -->
+  <path d="M 280 100 L 315 65 L 350 100" 
+        stroke="white" 
+        stroke-width="12" 
+        fill="none" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"/>
+  <line x1="315" y1="65" x2="315" y2="120" 
+        stroke="white" 
+        stroke-width="12" 
+        stroke-linecap="round"/>
+</svg>
