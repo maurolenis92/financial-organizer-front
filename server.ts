@@ -17,12 +17,51 @@ export function app(): express.Express {
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
+  // ==========================================
+  // 🔐 SECURITY HEADERS MIDDLEWARE
+  // ==========================================
+  server.use((req, res, next) => {
+    // HSTS - Force HTTPS
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+
+    // Prevent MIME sniffing
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+
+    // Prevent clickjacking
+    res.setHeader('X-Frame-Options', 'DENY');
+
+    // XSS Protection (legacy but doesn't hurt)
+    res.setHeader('X-XSS-Protection', '1; mode=block');
+
+    // Referrer Policy
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+
+    // Permissions Policy
+    res.setHeader(
+      'Permissions-Policy',
+      'camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()'
+    );
+
+    // Content Security Policy
+    res.setHeader(
+      'Content-Security-Policy',
+      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'"
+    );
+
+    next();
+  });
+  // ==========================================
+
   // Example Express Rest API endpoints
   // server.get('/api/**', (req, res) => { });
+
   // Serve static files from /browser
-  server.get('*.*', express.static(browserDistFolder, {
-    maxAge: '1y'
-  }));
+  server.get(
+    '*.*',
+    express.static(browserDistFolder, {
+      maxAge: '1y',
+    })
+  );
 
   // All regular routes use the Angular engine
   server.get('*', (req, res, next) => {
@@ -36,8 +75,8 @@ export function app(): express.Express {
         publicPath: browserDistFolder,
         providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
       })
-      .then((html) => res.send(html))
-      .catch((err) => next(err));
+      .then(html => res.send(html))
+      .catch(err => next(err));
   });
 
   return server;
