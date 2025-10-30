@@ -14,7 +14,7 @@ export class AnalyticsService {
   }
 
   public trackPageView(url: string): void {
-    gtag('config', 'G-E47VVHTDBN', {
+    gtag('config', 'G-Z7VN53HWPW', {
       page_path: url,
     });
   }
