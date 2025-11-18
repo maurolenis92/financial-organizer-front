@@ -10,12 +10,13 @@ export const routes: Routes = [
       import('./pages/auth/login/login.component').then(m => m.LoginComponent),
     canActivate: [loginGuard], // Redirige a dashboard si ya está logueado
   },
-  {
-    path: 'sign-up',
-    loadComponent: () =>
-      import('./pages/auth/sign-up/sign-up.component').then(m => m.SignUpComponent),
-    canActivate: [loginGuard], // Redirige a dashboard si ya está logueado
-  },
+  // TODO: Signup temporalmente oculto
+  // {
+  //   path: 'sign-up',
+  //   loadComponent: () =>
+  //     import('./pages/auth/sign-up/sign-up.component').then(m => m.SignUpComponent),
+  //   canActivate: [loginGuard], // Redirige a dashboard si ya está logueado
+  // },
   {
     path: 'dashboard',
     loadComponent: () =>

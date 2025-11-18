@@ -76,9 +76,10 @@ export class LoginComponent implements OnInit, OnDestroy {
       });
   }
 
-  public goToSignUp(): void {
-    this.router.navigate(['/sign-up']);
-  }
+  // TODO: Signup temporalmente oculto
+  // public goToSignUp(): void {
+  //   this.router.navigate(['/sign-up']);
+  // }
 
   ngOnDestroy(): void {
     this.$destroy.next();
