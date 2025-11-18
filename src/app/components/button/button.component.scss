@@ -1,0 +1,52 @@
+@import 'abstracts/variables';
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $border-radius-md;
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+  border: none;
+  transition: all $transition-normal;
+  position: relative;
+  overflow: hidden;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: $shadow-primary;
+}
+
+.primary {
+  background: $gradient-primary;
+  color: $white;
+}
+
+.secondary {
+  background: $bg-tertiary;
+  color: $text-primary;
+  border: $border-medium;
+}
+
+.tertiary {
+  background: $bg-elevated;
+  color: $text-primary;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,13 @@
+<button
+  [attr.type]="type"
+  [style.width]="width"
+  [id]="id"
+  [disabled]="disabled"
+  [ngClass]="variant"
+>
+  @if (loading) {
+    <span class="spinner"></span>
+  } @else {
+    {{ label }}
+  }
+</button>

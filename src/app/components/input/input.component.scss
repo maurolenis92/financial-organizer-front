@@ -1,0 +1,58 @@
+@import 'abstracts/variables';
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: $spacing-md;
+  input {
+    padding: $spacing-sm $spacing-md;
+    border: $border-light;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-md;
+    border-radius: $border-radius-md;
+    transition: border-color $transition-normal;
+
+    &::placeholder {
+      color: $text-muted;
+    }
+
+    &:focus {
+      border-color: $primary-color;
+      outline: none;
+      box-shadow: $focus-ring;
+      background: $bg-elevated;
+    }
+    &:hover {
+      border-color: $gray-500;
+    }
+  }
+}
+
+.input-container.primary {
+  .error-message {
+    color: $error-color;
+    font-size: $font-size-sm;
+    margin-top: $spacing-xs;
+  }
+  input.input-error {
+    border-color: $error-color;
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba($error-color, 0.3);
+    }
+  }
+}
+
+input.primary {
+  background: $bg-primary;
+  color: $text-primary;
+}
+
+input.secondary {
+  background: $bg-secondary;
+  color: $text-secondary;
+}
+input.tertiary {
+  background: $bg-elevated;
+  color: $text-primary;
+}

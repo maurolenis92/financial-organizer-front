@@ -1,0 +1,19 @@
+<div class="input-container" [ngClass]="variant">
+  @if (label) {
+    <label [for]="id">{{ label }}</label>
+  }
+  <input
+    [type]="type"
+    [placeholder]="placeholder"
+    [value]="value"
+    [id]="id"
+    (input)="onInputChange($event)"
+    (blur)="onTouched()"
+    [ngClass]="[variant, showErrors ? 'input-error' : '']"
+    [style.width]="width"
+    [disabled]="disabled"
+  />
+  @if (showErrors) {
+    <span class="error-message">{{ errorMessage }}</span>
+  }
+</div>

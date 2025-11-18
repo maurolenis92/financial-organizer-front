@@ -1,8 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+/* FinanSmart - Dark Theme Styles */
 
 // ==========================================================================
-// Arquitectura 7-1
+// Arquitectura 7-1 - Dark Theme
 // ==========================================================================
 
 // Abstracts
 @import 'styles/abstracts/variables';
+
+// Base
+@import 'styles/base/reset';
+
+// Components
+@import 'styles/components/utilities';

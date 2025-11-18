@@ -1,0 +1,78 @@
+@import 'abstracts/variables';
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: $bg-primary;
+  position: relative;
+
+  // Patrón de fondo sutil
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $gradient-primary;
+    opacity: 0.1;
+    z-index: 0;
+  }
+}
+
+.login-card {
+  background: $bg-tertiary;
+  backdrop-filter: blur(10px);
+  border: $border-light;
+  padding: $spacing-xl;
+  border-radius: $border-radius-xl;
+  box-shadow: $shadow-lg;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  z-index: 1;
+}
+
+h1 {
+  text-align: center;
+  color: $text-primary;
+  margin-bottom: $spacing-xl;
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-semibold;
+  background: $gradient-primary;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.form-group {
+  margin-bottom: $spacing-lg;
+}
+
+.auth-links {
+  text-align: center;
+  margin-top: $spacing-lg;
+  padding-top: $spacing-md;
+  border-top: $border-light;
+
+  p {
+    margin: $spacing-sm 0;
+    color: $text-secondary;
+    font-size: $font-size-sm;
+  }
+
+  .link {
+    color: $primary-color;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $primary-light;
+      text-decoration: underline;
+    }
+  }
+}

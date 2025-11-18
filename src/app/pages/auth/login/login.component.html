@@ -1,0 +1,39 @@
+<div class="login-container">
+  <div class="login-card">
+    <h1>FinanSmart Iniciar Sesión</h1>
+
+    <form [formGroup]="form">
+      <fs-input
+        label="Usuario"
+        type="text"
+        formControlName="username"
+        id="username"
+        placeholder="Ingrese su usuario"
+        [width]="'100%'"
+      ></fs-input>
+      <fs-input
+        label="Contraseña"
+        type="password"
+        formControlName="password"
+        id="password"
+        placeholder="Ingrese su contraseña"
+        [width]="'100%'"
+      ></fs-input>
+
+      <fs-button
+        [disabled]="buttonDisabled"
+        [loading]="loading"
+        label="Ingresar"
+        (click)="login()"
+        type="button"
+        variant="primary"
+      ></fs-button>
+    </form>
+
+    <div class="auth-links">
+      <p>
+        ¿No tienes una cuenta? <a (click)="goToSignUp()" class="link">Crear Cuenta</a>
+      </p>
+    </div>
+  </div>
+</div>

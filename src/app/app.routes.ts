@@ -1,13 +1,45 @@
 import { Routes } from '@angular/router';
+import { loginGuard } from './guards/login.guard';
+import { tokenGuard } from './guards/token.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
-    loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent),
+    loadComponent: () =>
+      import('./pages/auth/login/login.component').then(m => m.LoginComponent),
+    canActivate: [loginGuard], // Redirige a dashboard si ya está logueado
   },
   {
+    path: 'sign-up',
+    loadComponent: () =>
+      import('./pages/auth/sign-up/sign-up.component').then(m => m.SignUpComponent),
+    canActivate: [loginGuard], // Redirige a dashboard si ya está logueado
+  },
+  {
+    path: 'dashboard',
+    loadComponent: () =>
+      import('./layouts/dashboard-layout/dashboard-layout.component').then(
+        m => m.DashboardLayoutComponent
+      ),
+    canActivate: [tokenGuard], // Protege con validación de token JWT
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
+      },
+      {
+        path: 'budgets',
+        loadComponent: () =>
+          import('./pages/budgets/budgets.component').then(m => m.BudgetsComponent),
+      },
+    ],
+  },
+  // Mantener home como redirect temporal
+  {
     path: 'home',
-    loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
   },
 ];
