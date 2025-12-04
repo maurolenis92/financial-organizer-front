@@ -42,3 +42,7 @@ testem.log
 Thumbs.db
 stats.html
 stats.json
+
+# Environment files (keep only templates)
+# /src/environments/environment.local.ts
+# /src/environments/*.local.ts

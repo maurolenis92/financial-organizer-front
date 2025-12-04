@@ -235,8 +235,7 @@
 
 .content-wrapper {
   padding: $spacing-xl;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 0;
 
   @media (max-width: $breakpoint-md) {
     padding: $spacing-lg;

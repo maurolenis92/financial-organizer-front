@@ -36,21 +36,19 @@ export class LoginComponent implements OnInit, OnDestroy {
   private $destroy: Subject<void> = new Subject<void>();
   public loading: boolean = false;
   public buttonDisabled: boolean = true;
+  public errorMessage: string = '';
 
   ngOnInit(): void {
     this.form = this.fb.group({
       username: new FormControl('', [Validators.required, EmailValidator()]),
       password: new FormControl('', [Validators.required]),
     });
-    this.form.statusChanges
+    this.form.valueChanges
       .pipe(distinctUntilChanged(), takeUntil(this.$destroy))
-      .subscribe(status => {
-        console.log('cambio');
-        this.buttonDisabled = status !== 'VALID';
+      .subscribe(() => {
+        this.buttonDisabled = this.form.status === 'INVALID';
+        this.errorMessage = '';
       });
-    this.form.valueChanges.pipe(takeUntil(this.$destroy)).subscribe(value => {
-      console.log('cambio', value);
-    });
   }
 
   public login(): void {
@@ -62,6 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.buttonDisabled = true;
     this.loading = true;
     this.authService
       .signIn(this.form.value.username, this.form.value.password)
@@ -69,17 +68,16 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.loading = false;
         this.router.navigate(['/dashboard']);
       })
-      .catch(error => {
-        console.error('Error during login:', error);
+      .catch(() => {
+        this.errorMessage = 'Usuario o contraseña incorrectos.';
         this.loading = false;
         this.buttonDisabled = false;
       });
   }
 
-  // TODO: Signup temporalmente oculto
-  // public goToSignUp(): void {
-  //   this.router.navigate(['/sign-up']);
-  // }
+  public goToSignUp(): void {
+    this.router.navigate(['/sign-up']);
+  }
 
   ngOnDestroy(): void {
     this.$destroy.next();

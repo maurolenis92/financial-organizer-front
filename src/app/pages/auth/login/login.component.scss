@@ -1,95 +1,22 @@
 @import 'abstracts/variables';
 
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// ========== PAGE CONTAINER (sin scroll) ==========
+.login-page {
   min-height: 100vh;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: $bg-primary;
   position: relative;
-
-  // Patrón de fondo sutil
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: $gradient-primary;
-    opacity: 0.1;
-    z-index: 0;
-  }
-}
-
-.login-card {
-  background: $bg-tertiary;
-  backdrop-filter: blur(10px);
-  border: $border-light;
-  padding: $spacing-xl;
-  border-radius: $border-radius-xl;
-  box-shadow: $shadow-lg;
-  width: 100%;
-  max-width: 400px;
-  position: relative;
-  z-index: 1;
-  margin: $spacing-md;
-
-  // Responsive adjustments
-  @media (max-width: $breakpoint-md) {
-    max-width: 90%;
-    padding: $spacing-lg;
-    margin: $spacing-sm;
-    border-radius: $border-radius-lg;
-    box-shadow: $shadow-md;
-  }
+  padding: $spacing-md;
 
   @media (max-width: $breakpoint-sm) {
-    max-width: 95%;
-    padding: $spacing-md;
-    margin: $spacing-xs;
-    border-radius: $border-radius-md;
-  }
-
-  @media (max-width: $breakpoint-xs) {
-    max-width: 100%;
-    margin: 0;
-    border-radius: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-
-h1 {
-  text-align: center;
-  color: $text-primary;
-  margin-bottom: $spacing-xl;
-  font-size: $font-size-3xl;
-  font-weight: $font-weight-semibold;
-  background: $gradient-primary;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-
-  // Responsive typography
-  @media (max-width: $breakpoint-md) {
-    font-size: $font-size-2xl;
-    margin-bottom: $spacing-lg;
-  }
-
-  @media (max-width: $breakpoint-sm) {
-    font-size: $font-size-xl;
-    margin-bottom: $spacing-md;
-  }
-}
-
-.form-group {
-  margin-bottom: $spacing-lg;
-
-  @media (max-width: $breakpoint-sm) {
-    margin-bottom: $spacing-md;
+    padding: $spacing-sm $spacing-xs;
+    overflow-y: auto;
+    height: auto;
   }
 }
 
@@ -104,7 +31,7 @@ h1 {
     padding-top: $spacing-sm;
   }
 
-  p {
+  span {
     margin: $spacing-sm 0;
     color: $text-secondary;
     font-size: $font-size-sm;
@@ -133,28 +60,245 @@ h1 {
   }
 }
 
-// Container responsive adjustments
+// ========== BACKGROUND DECORATION ==========
+.bg-decoration {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+
+  .shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.08;
+    filter: blur(60px);
+
+    &.shape-1 {
+      width: 500px;
+      height: 500px;
+      background: linear-gradient(135deg, $primary-color, $secondary-color);
+      top: -250px;
+      right: -200px;
+      animation: float1 20s ease-in-out infinite;
+
+      @media (max-width: $breakpoint-sm) {
+        width: 300px;
+        height: 300px;
+        top: -150px;
+        right: -100px;
+        filter: blur(40px);
+      }
+    }
+
+    &.shape-2 {
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(135deg, $success-color, $secondary-color);
+      bottom: -200px;
+      left: -150px;
+      animation: float2 18s ease-in-out infinite;
+
+      @media (max-width: $breakpoint-sm) {
+        width: 250px;
+        height: 250px;
+        bottom: -125px;
+        left: -75px;
+        filter: blur(40px);
+      }
+    }
+
+    &.shape-3 {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(135deg, $secondary-color, $primary-light);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: float3 22s ease-in-out infinite;
+
+      @media (max-width: $breakpoint-sm) {
+        width: 200px;
+        height: 200px;
+        filter: blur(40px);
+      }
+    }
+  }
+}
+
+@keyframes float1 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(-30px, 30px) rotate(180deg);
+  }
+}
+
+@keyframes float2 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(40px, -40px) rotate(-180deg);
+  }
+}
+
+@keyframes float3 {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+// ========== MAIN CONTAINER ==========
 .login-container {
-  padding: $spacing-md;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
 
-  @media (max-width: $breakpoint-md) {
-    padding: $spacing-sm;
-  }
-
-  @media (max-width: $breakpoint-xs) {
-    padding: 0;
+  @media (max-width: $breakpoint-sm) {
+    gap: $spacing-md;
+    max-width: 100%;
   }
 }
 
-// Animation for smooth entrance
+// ========== LOGO SECTION ==========
+.login-logo {
+  text-align: center;
+  animation: fadeInDown 0.6s ease-out;
+
+  .logo-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    background: $gradient-primary;
+    border-radius: $border-radius-xl;
+    box-shadow: $shadow-primary;
+    transition: transform $transition-fast;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: $breakpoint-sm) {
+      width: 56px;
+      height: 56px;
+    }
+  }
+
+  .logo-title {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    margin: 0 0 $spacing-xs 0;
+    letter-spacing: -0.5px;
+
+    @media (max-width: $breakpoint-sm) {
+      font-size: $font-size-2xl;
+    }
+  }
+
+  .logo-subtitle {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    margin: 0;
+
+    @media (max-width: $breakpoint-sm) {
+      font-size: $font-size-xs;
+    }
+  }
+}
+
+// ========== LOGIN CARD ==========
 .login-card {
-  animation: fadeInUp 0.4s ease-out;
+  background: $bg-secondary;
+  border: $border-light;
+  border-radius: $border-radius-xl;
+  padding: $spacing-xl;
+  box-shadow: $shadow-lg;
+  backdrop-filter: blur(10px);
+  animation: fadeInUp 0.6s ease-out;
+
+  @media (max-width: $breakpoint-sm) {
+    padding: $spacing-lg $spacing-md;
+    border-radius: $border-radius-lg;
+  }
 }
 
-@keyframes fadeInUp {
+.error-message {
+  color: $error-color;
+  font-size: $font-size-sm;
+  text-align: center;
+}
+
+.card-header {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+
+  .card-title {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    margin: 0 0 $spacing-xs 0;
+
+    @media (max-width: $breakpoint-sm) {
+      font-size: $font-size-xl;
+    }
+  }
+
+  .card-subtitle {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    margin: 0;
+
+    @media (max-width: $breakpoint-sm) {
+      font-size: $font-size-xs;
+    }
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    margin-bottom: $spacing-lg;
+  }
+}
+
+// ========== FORM ==========
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+
+  @media (max-width: $breakpoint-sm) {
+    gap: $spacing-md;
+  }
+}
+
+// ========== FOOTER ==========
+.login-footer {
+  text-align: center;
+  animation: fadeIn 0.8s ease-out;
+
+  .footer-text {
+    font-size: $font-size-xs;
+    color: $text-muted;
+    margin: 0;
+  }
+}
+
+// ========== ANIMATIONS ==========
+@keyframes fadeInDown {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(-20px);
   }
   to {
     opacity: 1;
@@ -162,13 +306,105 @@ h1 {
   }
 }
 
-// Loading state improvements for mobile
-@media (max-width: $breakpoint-sm) {
-  .login-card {
-    form {
-      fs-button {
-        width: 100%;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ========== RESPONSIVE MOBILE ==========
+@media (max-width: 480px) {
+  .login-page {
+    padding: $spacing-md $spacing-sm;
+  }
+
+  .login-container {
+    gap: $spacing-md;
+  }
+
+  .login-logo {
+    .logo-icon {
+      width: 56px;
+      height: 56px;
+      margin-bottom: $spacing-sm;
+
+      svg {
+        width: 28px;
+        height: 28px;
       }
     }
+
+    .logo-title {
+      font-size: $font-size-xl;
+      margin-bottom: $spacing-xs;
+    }
+
+    .logo-subtitle {
+      font-size: $font-size-xs;
+    }
+  }
+
+  .login-card {
+    padding: $spacing-lg;
+    border-radius: $border-radius-lg;
+  }
+
+  .card-header {
+    margin-bottom: $spacing-md;
+
+    .card-title {
+      font-size: $font-size-xl;
+      margin-bottom: $spacing-xs;
+    }
+
+    .card-subtitle {
+      font-size: $font-size-xs;
+    }
+  }
+
+  .login-form {
+    gap: $spacing-md;
+  }
+
+  .login-footer {
+    .footer-text {
+      font-size: $font-size-xs;
+    }
+  }
+}
+
+// ========== ACCESIBILIDAD ==========
+// .login-form {
+//   fs-input,
+//   fs-button {
+//     &:focus-within {
+//       outline: 2px solid $primary-color;
+//       outline-offset: 2px;
+//       border-radius: $border-radius-md;
+//     }
+//   }
+// }
+
+// ========== MEJORAS DARK MODE ==========
+@media (prefers-color-scheme: dark) {
+  .login-card {
+    background: rgba($bg-secondary, 0.95);
+    box-shadow:
+      $shadow-lg,
+      0 0 0 1px rgba(255, 255, 255, 0.05);
   }
 }

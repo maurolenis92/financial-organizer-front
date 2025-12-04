@@ -1,0 +1,13 @@
+@import 'abstracts/variables';
+
+:host ::ng-deep {
+  .mat-mdc-icon-button.mat-mdc-button-base {
+    --mdc-icon-button-state-layer-size: 31px;
+    padding: 4px;
+  }
+  .mat-mdc-form-field-infix {
+    padding: 2px 0 !important;
+    display: flex;
+    align-items: center;
+  }
+}

@@ -32,9 +32,9 @@
       <div class="header-right">
         <div class="user-info">
           <div class="user-avatar">
-            <span>U</span>
+            <span>{{ userData().initialLetters }}</span>
           </div>
-          <span class="user-name">Usuario</span>
+          <span class="user-name">{{ userData().userProfile?.name }}</span>
         </div>
 
         <!-- Logout button -->

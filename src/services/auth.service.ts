@@ -103,44 +103,6 @@ export class AuthService {
   }
 
   /**
-   * Get current authenticated user
-   */
-  public async getCurrentUser(): Promise<GetCurrentUserOutput | null> {
-    try {
-      const user = await getCurrentUser();
-      return user;
-    } catch (error) {
-      console.error('Error getting current user:', error);
-      return null;
-    }
-  }
-
-  /**
-   * Get current user's JWT token
-   */
-  public async getCurrentUserToken(): Promise<string | null> {
-    try {
-      const session = await fetchAuthSession();
-      return session.tokens?.idToken?.toString() || null;
-    } catch (error) {
-      console.error('Error getting user token:', error);
-      return null;
-    }
-  }
-
-  /**
-   * Check if user is authenticated
-   */
-  public async isAuthenticated(): Promise<boolean> {
-    try {
-      await getCurrentUser();
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
-  /**
    * Request password reset
    */
   public async resetPassword(email: string): Promise<ResetPasswordOutput> {
@@ -177,6 +139,44 @@ export class AuthService {
     } catch (error) {
       console.error('Error confirming password reset:', error);
       throw error;
+    }
+  }
+
+  /**
+   * Get current authenticated user
+   */
+  public async getCurrentUser(): Promise<GetCurrentUserOutput | null> {
+    try {
+      const user = await getCurrentUser();
+      return user;
+    } catch (error) {
+      console.error('Error getting current user:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Get current user's JWT token
+   */
+  public async getCurrentUserToken(): Promise<string | null> {
+    try {
+      const session = await fetchAuthSession();
+      return session.tokens?.idToken?.toString() || null;
+    } catch (error) {
+      console.error('Error getting user token:', error);
+      return null;
+    }
+  }
+
+  /**
+   * Check if user is authenticated
+   */
+  public async isAuthenticated(): Promise<boolean> {
+    try {
+      await getCurrentUser();
+      return true;
+    } catch {
+      return false;
     }
   }
 }

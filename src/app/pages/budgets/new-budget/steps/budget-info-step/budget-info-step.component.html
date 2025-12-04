@@ -1,0 +1,70 @@
+<form [formGroup]="formGroup">
+  <div class="budget-info-step">
+    <div class="budget-info-step__header">
+      <div class="budget-info-step__icon">
+        <mat-icon class="material-icons">info</mat-icon>
+      </div>
+      <div class="budget-info-step__title">
+        <h2>Información del Presupuesto</h2>
+        <p>Completa los datos básicos de tu presupuesto</p>
+      </div>
+    </div>
+
+    <div class="budget-info-step__form">
+      <div class="form-card">
+        <div class="form-card__icon">
+          <mat-icon class="material-icons">label</mat-icon>
+        </div>
+        <div class="form-card__field">
+          <fs-input
+            label="Nombre del Presupuesto"
+            formControlName="name"
+            placeholder="Ej: Presupuesto Personal 2024"
+          ></fs-input>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card__icon">
+          <mat-icon class="material-icons">attach_money</mat-icon>
+        </div>
+        <div class="form-card__field">
+          <fs-select-input
+            label="Moneda"
+            formControlName="currency"
+            [options]="currencyOptions"
+            placeholder="Seleccione la moneda"
+          ></fs-select-input>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card__icon">
+          <mat-icon class="material-icons">event</mat-icon>
+        </div>
+        <div class="form-card__field">
+          <fs-date-picker
+            label="Fecha de Inicio"
+            formControlName="startDate"
+            type="date"
+            placeholder="Seleccione la fecha de inicio"
+          ></fs-date-picker>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <div class="form-card__icon">
+          <mat-icon class="material-icons">event_available</mat-icon>
+        </div>
+        <div class="form-card__field">
+          <fs-date-picker
+            label="Fecha de Fin"
+            formControlName="endDate"
+            type="date"
+            placeholder="Seleccione la fecha de fin"
+          ></fs-date-picker>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
