@@ -5,6 +5,9 @@
   [disabled]="disabled"
   [ngClass]="variant"
 >
+  @if (icon) {
+    <mat-icon class="button-icon">{{ icon }}</mat-icon>
+  }
   @if (loading) {
     <span class="spinner"></span>
   } @else {

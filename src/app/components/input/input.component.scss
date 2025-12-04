@@ -9,8 +9,8 @@
     border: $border-light;
     border-radius: $border-radius-sm;
     font-size: $font-size-md;
-    border-radius: $border-radius-md;
     transition: border-color $transition-normal;
+    height: 40px;
 
     &::placeholder {
       color: $text-muted;

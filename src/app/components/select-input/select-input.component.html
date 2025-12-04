@@ -1,0 +1,15 @@
+<label [for]="id">{{ label }}</label>
+<mat-form-field [style.width]="width" appearance="fill">
+  <!-- <mat-label>{{ label }}</mat-label> -->
+  <mat-select
+    [placeholder]="placeholder"
+    [id]="id"
+    [(value)]="value"
+    (selectionChange)="onSelectChange($event)"
+    [disabled]="disabled"
+  >
+    @for (item of options; track item.value) {
+      <mat-option [value]="item" [disabled]="item.disabled">{{ item.label }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

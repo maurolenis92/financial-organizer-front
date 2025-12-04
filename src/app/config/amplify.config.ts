@@ -1,10 +1,11 @@
 import { ResourcesConfig } from 'aws-amplify';
+import { environment } from '../../environments/environment.development';
 
 export const amplifyConfig: ResourcesConfig = {
   Auth: {
     Cognito: {
-      userPoolId: 'us-east-1_TrXSE9KFT', // Reemplaza con tu User Pool ID
-      userPoolClientId: '5qumfb6gigb756k95c9k4hpg5r', // Reemplaza con tu Client ID
+      userPoolId: environment.cognito.userPoolId,
+      userPoolClientId: environment.cognito.userPoolClientId,
       loginWith: {
         email: true,
       },

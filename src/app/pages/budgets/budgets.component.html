@@ -1,201 +1,53 @@
-<div class="budgets">
-  <!-- Header -->
-  <div class="budgets-header">
-    <div class="header-content">
-      <div>
-        <h1>Presupuestos</h1>
-        <p>Administra y controla tus gastos mensuales</p>
-      </div>
-      <button class="btn btn--primary">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
+<div class="budgets__header">
+  <h1>Presupuestos</h1>
+  <fs-button (click)="newBudget()" icon="add" label="Nuevo presupuesto"></fs-button>
+</div>
+
+<form [formGroup]="form" class="budgets__filter">
+  <fs-input
+    label="Nombre del presupuesto"
+    type="text"
+    id="budget-name"
+    placeholder="Ejemplo: Presupuesto mensual"
+    [width]="'100%'"
+  ></fs-input>
+  <fs-select-input
+    label="Categoría"
+    formControlName="category"
+    id="budget-category"
+    [options]="[
+      { value: 'food', label: 'Alimentación' },
+      { value: 'transport', label: 'Transporte' },
+      { value: 'entertainment', label: 'Entretenimiento' },
+    ]"
+    placeholder="Selecciona una categoría"
+    [width]="'100%'"
+  ></fs-select-input>
+  <fs-date-picker
+    formControlName="startDate"
+    [label]="'Rango de fechas'"
+    [mode]="'single'"
+  ></fs-date-picker>
+  <fs-button icon="clear" label="limpiar filtro"></fs-button>
+</form>
+
+<div class="budgets__cards">
+  @for (item of budgets$().budgets; track $index) {
+    <fs-generic-card [title]="item.name">
+      <div card-content class="budgets__card-content">
+        <span>{{ item.startDate | date }} - {{ item.endDate | date }}</span>
+        <span>{{ item.currency }}</span>
+        <span
+          >{{
+            item.availableMoney | currency: item.currency : 'symbol-narrow'
+          }}
+          Disponible</span
         >
-          <line x1="12" y1="5" x2="12" y2="19"></line>
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-        </svg>
-        Nuevo Presupuesto
-      </button>
-    </div>
-  </div>
-
-  <!-- Summary cards -->
-  <div class="summary-cards">
-    <div class="card summary-card">
-      <div class="summary-icon summary-icon--primary">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M16.24 7.76a6 6 0 0 1-8.49 8.49"></path>
-          <path d="M8.12 8.12L12 12"></path>
-        </svg>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="(item.availableMoney / item.totalIncomes) * 100"
+        ></mat-progress-bar>
       </div>
-      <div class="summary-content">
-        <h3>Total Asignado</h3>
-        <div class="summary-value">${{ getTotalAllocated() | number: '1.2-2' }}</div>
-      </div>
-    </div>
-
-    <div class="card summary-card">
-      <div class="summary-icon summary-icon--warning">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-          <circle cx="9" cy="7" r="4"></circle>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-        </svg>
-      </div>
-      <div class="summary-content">
-        <h3>Total Gastado</h3>
-        <div class="summary-value summary-value--warning">
-          ${{ getTotalSpent() | number: '1.2-2' }}
-        </div>
-      </div>
-    </div>
-
-    <div class="card summary-card">
-      <div class="summary-icon summary-icon--success">
-        <svg
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline>
-        </svg>
-      </div>
-      <div class="summary-content">
-        <h3>Disponible</h3>
-        <div class="summary-value summary-value--success">
-          ${{ getTotalRemaining() | number: '1.2-2' }}
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Budgets list -->
-  <div class="budgets-list">
-    <div class="list-header">
-      <h2>Presupuestos Activos</h2>
-      <div class="list-filters">
-        <select class="input" style="width: auto; min-width: 150px">
-          <option value="all">Todas las categorías</option>
-          <option value="necesidades">Necesidades</option>
-          <option value="deseos">Deseos</option>
-          <option value="meta">Metas</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="budgets-grid">
-      <div
-        *ngFor="let budget of budgets"
-        class="card budget-card"
-        [attr.data-status]="getBudgetStatus(budget)"
-      >
-        <!-- Budget header -->
-        <div class="budget-header">
-          <div class="budget-info">
-            <h3>{{ budget.name }}</h3>
-            <span class="budget-category badge badge--neutral">{{
-              budget.category
-            }}</span>
-          </div>
-          <button class="btn btn--ghost btn--sm">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <circle cx="12" cy="12" r="1"></circle>
-              <circle cx="12" cy="5" r="1"></circle>
-              <circle cx="12" cy="19" r="1"></circle>
-            </svg>
-          </button>
-        </div>
-
-        <!-- Progress section -->
-        <div class="budget-progress">
-          <div class="progress-header">
-            <span class="progress-label">Progreso</span>
-            <span class="progress-percentage"
-              >{{ getProgressPercentage(budget) | number: '1.0-0' }}%</span
-            >
-          </div>
-
-          <div class="progress-bar">
-            <div
-              class="progress-fill"
-              [style.width.%]="getProgressPercentage(budget)"
-              [style.background-color]="budget.color"
-            ></div>
-          </div>
-        </div>
-
-        <!-- Budget amounts -->
-        <div class="budget-amounts">
-          <div class="amount-item">
-            <span class="amount-label">Gastado</span>
-            <span class="amount-value amount-value--spent"
-              >${{ budget.spent | number: '1.2-2' }}</span
-            >
-          </div>
-          <div class="amount-item">
-            <span class="amount-label">Presupuesto</span>
-            <span class="amount-value">${{ budget.allocated | number: '1.2-2' }}</span>
-          </div>
-          <div class="amount-item">
-            <span class="amount-label">Restante</span>
-            <span
-              class="amount-value"
-              [class]="
-                getRemainingAmount(budget) >= 0
-                  ? 'amount-value--positive'
-                  : 'amount-value--negative'
-              "
-            >
-              ${{ getRemainingAmount(budget) | number: '1.2-2' }}
-            </span>
-          </div>
-        </div>
-
-        <!-- Status indicator -->
-        <div class="budget-status">
-          <div
-            class="status-indicator"
-            [class]="'status-indicator--' + getBudgetStatus(budget)"
-          ></div>
-          <span class="status-text">
-            <ng-container [ngSwitch]="getBudgetStatus(budget)">
-              <span *ngSwitchCase="'success'">En buen estado</span>
-              <span *ngSwitchCase="'warning'">Cerca del límite</span>
-              <span *ngSwitchCase="'danger'">Límite excedido</span>
-            </ng-container>
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
+    </fs-generic-card>
+  }
 </div>

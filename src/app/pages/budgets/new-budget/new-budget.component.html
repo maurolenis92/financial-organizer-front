@@ -1,0 +1,108 @@
+<div class="new-budget">
+  <div class="new-budget__header">
+    <h1>Nuevo Presupuesto</h1>
+    <p class="new-budget__subtitle">Crea y gestiona tu presupuesto en 3 simples pasos</p>
+  </div>
+
+  <!-- Stepper de progreso -->
+  <div class="new-budget__stepper">
+    @for (step of steps; track step.title) {
+      <div
+        class="stepper-item"
+        [class.stepper-item--active]="currentStepIndex === $index"
+        [class.stepper-item--completed]="step.completed"
+      >
+        <div class="stepper-item__circle">
+          @if (step.completed) {
+            <mat-icon class="material-icons">check</mat-icon>
+          } @else {
+            <span>{{ $index + 1 }}</span>
+          }
+        </div>
+        <div class="stepper-item__label">
+          <span class="stepper-item__title">{{ step.title }}</span>
+          @if (currentStepIndex === $index) {
+            <span class="stepper-item__status">En progreso</span>
+          } @else if (step.completed) {
+            <span class="stepper-item__status">Completado</span>
+          }
+        </div>
+        @if ($index < steps.length - 1) {
+          <div class="stepper-item__line"></div>
+        }
+      </div>
+    }
+  </div>
+  <!-- Resumen financiero -->
+  <div class="new-budget__summary">
+    <div class="summary-card summary-card--income">
+      <div class="summary-card__icon">
+        <mat-icon class="material-icons">trending_up</mat-icon>
+        <span class="summary-card__label">Total Ingresos</span>
+      </div>
+      <div class="summary-card__content">
+        <span class="summary-card__value">{{
+          totalIncomes | currency: currencySelected : 'symbol-narrow'
+        }}</span>
+      </div>
+    </div>
+
+    <div class="summary-card summary-card--expense">
+      <div class="summary-card__icon">
+        <mat-icon class="material-icons">trending_down</mat-icon>
+        <span class="summary-card__label">Total Gastos</span>
+      </div>
+      <div class="summary-card__content">
+        <span class="summary-card__value">{{
+          totalExpenses | currency: currencySelected : 'symbol-narrow'
+        }}</span>
+      </div>
+    </div>
+
+    <div class="summary-card summary-card--available">
+      <div class="summary-card__icon">
+        <mat-icon class="material-icons">account_balance_wallet</mat-icon>
+        <span class="summary-card__label">Disponible</span>
+      </div>
+      <div class="summary-card__content">
+        <span class="summary-card__value">{{
+          totalIncomes - totalExpenses | currency: currencySelected : 'symbol-narrow'
+        }}</span>
+      </div>
+    </div>
+  </div>
+  @switch (currentStepIndex) {
+    @case (0) {
+      <app-budget-info-step [formGroup]="getInfoFormGroup()"></app-budget-info-step>
+    }
+    @case (1) {
+      <app-budget-incomes-step
+        [formArray]="getFormArray('incomes')"
+        [selectedCurrency]="currencySelected"
+      ></app-budget-incomes-step>
+    }
+    @case (2) {
+      <app-budget-expenses-step
+        [categoriesInput]="categories"
+        [formArray]="getFormArray('expenses')"
+        [selectedCurrency]="currencySelected"
+      ></app-budget-expenses-step>
+    }
+  }
+  <!-- Navegación -->
+  <div class="new-budget__buttons">
+    <fs-button
+      variant="secondary"
+      label="Anterior"
+      (click)="previousStep()"
+      [disabled]="currentStepIndex === 0 || loading"
+    ></fs-button>
+
+    <fs-button
+      [loading]="loading"
+      [label]="buttonText"
+      (click)="nextStep()"
+      [disabled]="!steps[currentStepIndex].enabled || buttonDisabled || loading"
+    ></fs-button>
+  </div>
+</div>

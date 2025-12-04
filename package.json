@@ -12,15 +12,18 @@
     "format:check": "prettier --check \"src/**/*.{ts,html,scss,css,json}\"",
     "lint": "eslint \"src/**/*.{ts,html}\"",
     "lint:fix": "eslint \"src/**/*.{ts,html}\" --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "generate:icons": "node scripts/generate-icons.mjs"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.0.0",
+    "@angular/cdk": "^17.3.10",
     "@angular/common": "^17.0.0",
     "@angular/compiler": "^17.0.0",
     "@angular/core": "^17.0.0",
     "@angular/forms": "^17.0.0",
+    "@angular/material": "^17.3.10",
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/platform-server": "^17.0.0",
@@ -60,6 +63,7 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "lint-staged": "^16.2.6",
     "prettier": "^3.6.2",
+    "sharp": "^0.34.5",
     "typescript": "~5.2.2",
     "typescript-eslint": "^8.46.2",
     "webpack-cli": "^6.0.1"

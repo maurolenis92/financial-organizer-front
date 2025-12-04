@@ -29,11 +29,29 @@ export const routes: Routes = [
         path: '',
         loadComponent: () =>
           import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent),
+        canActivate: [tokenGuard],
       },
       {
         path: 'budgets',
         loadComponent: () =>
           import('./pages/budgets/budgets.component').then(m => m.BudgetsComponent),
+        canActivate: [tokenGuard],
+      },
+      {
+        path: 'budgets/new',
+        loadComponent: () =>
+          import('./pages/budgets/new-budget/new-budget.component').then(
+            m => m.NewBudgetComponent
+          ),
+        canActivate: [tokenGuard],
+      },
+      {
+        path: 'budgets/:id',
+        loadComponent: () =>
+          import('./pages/budgets/budget-detail/budget-detail.component').then(
+            m => m.BudgetDetailComponent
+          ),
+        canActivate: [tokenGuard],
       },
     ],
   },

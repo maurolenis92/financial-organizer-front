@@ -1,0 +1,135 @@
+@import 'abstracts/variables';
+
+// tu-componente.component.scss
+::ng-deep {
+  // ====================================
+  // CONTENEDOR DEL FORM FIELD
+  // ====================================
+  .mat-mdc-form-field {
+    width: 100%;
+
+    // ====================================
+    // QUITAR ESPACIO PARA LABEL FLOTANTE
+    // ====================================
+    .mat-mdc-text-field-wrapper {
+      padding-top: 0 !important;
+    }
+
+    // ====================================
+    // CONTENEDOR INTERNO (donde va el borde)
+    // ====================================
+    .mat-mdc-form-field-flex {
+      border: 1px solid #444;
+      border-radius: $border-radius-sm;
+      padding: 0 16px;
+      height: 30px;
+      min-height: 40px;
+      transition: border-color $transition-normal;
+    }
+
+    .mat-mdc-form-field-infix {
+      padding: 8px 0;
+      --mat-form-field-container-vertical-padding: 6px;
+      --mat-form-field-container-height: 24px;
+    }
+
+    // ====================================
+    // QUITAR BACKGROUND DEL FILLED
+    // ====================================
+    .mdc-text-field--filled {
+      background-color: transparent !important;
+      padding: 0 !important;
+    }
+
+    // ====================================
+    // QUITAR UNDERLINE
+    // ====================================
+    .mdc-line-ripple {
+      display: none;
+    }
+
+    // ====================================
+    // TEXTO DEL SELECT
+    // ====================================
+    .mat-mdc-select-value {
+      color: rgba(255, 255, 255, 0.87);
+      font-size: 14px;
+    }
+
+    // ====================================
+    // FLECHA DEL SELECT
+    // ====================================
+    .mat-mdc-select-arrow {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    // ====================================
+    // ESTADO HOVER
+    // ====================================
+    &:hover {
+      .mat-mdc-form-field-flex {
+        background-color: transparent;
+        border-color: $gray-500;
+      }
+    }
+
+    // ====================================
+    // ESTADO FOCUS
+    // ====================================
+    &.mat-focused {
+      .mat-mdc-form-field-flex {
+        border-color: $primary-color;
+        box-shadow: $focus-ring;
+      }
+
+      .mat-mdc-floating-label {
+        color: $primary-color !important;
+      }
+    }
+
+    // ====================================
+    // ESTADO DISABLED
+    // ====================================
+    &.mat-form-field-disabled {
+      .mat-mdc-form-field-flex {
+        background-color: #1a1a1a;
+        border-color: #333;
+        opacity: 0.6;
+      }
+    }
+  }
+
+  // ====================================
+  // PANEL DROPDOWN (sin cambios)
+  // ====================================
+  .mat-mdc-select-panel {
+    background-color: #2a2a2a !important;
+    border: 1px solid #444;
+    border-radius: 8px;
+    margin-top: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+    .mat-mdc-option {
+      color: rgba(255, 255, 255, 0.87);
+      padding: 12px 16px;
+      font-size: 14px;
+
+      &:hover:not(.mdc-list-item--disabled) {
+        background-color: rgba(255, 255, 255, 0.08);
+      }
+
+      &.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+        background-color: rgba(59, 130, 246, 0.12);
+        color: $primary-color;
+      }
+
+      &.mat-mdc-option-active {
+        background-color: rgba(255, 255, 255, 0.12);
+      }
+
+      .mdc-list-item__primary-text {
+        color: inherit;
+      }
+    }
+  }
+}

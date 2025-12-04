@@ -1,0 +1,30 @@
+@import 'abstracts/variables';
+
+.generic-card {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  gap: $spacing-lg;
+  padding: $spacing-xl;
+  transition: all $transition-normal;
+  border-radius: $border-radius-md;
+  background-color: $bg-tertiary;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-lg;
+  }
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}

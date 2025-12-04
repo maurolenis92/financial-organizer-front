@@ -1,0 +1,18 @@
+<div
+  class="generic-card"
+  [class.clickable]="clickable"
+  [class.disabled]="disabled"
+  [attr.role]="clickable ? 'button' : null"
+  [attr.tabindex]="clickable && !disabled ? 0 : null"
+  [attr.aria-label]="ariaLabel"
+  [attr.aria-disabled]="disabled ? 'true' : null"
+  (click)="handleClick()"
+  (keydown)="handleKeydown($event)"
+>
+  @if (title) {
+    <span class="generic-card__title">{{
+      title.length > titleLength ? (title | slice: 0 : titleLength) + '...' : title
+    }}</span>
+  }
+  <ng-content select="[card-content]"></ng-content>
+</div>

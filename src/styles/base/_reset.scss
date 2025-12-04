@@ -188,30 +188,6 @@ pre {
   }
 }
 
-// Tablas
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: $spacing-lg 0;
-
-  th,
-  td {
-    padding: $spacing-sm $spacing-md;
-    text-align: left;
-    border-bottom: $border-light;
-  }
-
-  th {
-    background: $bg-tertiary;
-    font-weight: $font-weight-semibold;
-    color: $text-primary;
-  }
-
-  tr:hover {
-    background: rgba($hover-overlay, 0.5);
-  }
-}
-
 // Animaciones globales
 @keyframes fadeIn {
   from {
@@ -272,4 +248,8 @@ table {
   .no-print {
     display: none !important;
   }
+}
+
+span {
+  overflow-wrap: anywhere;
 }

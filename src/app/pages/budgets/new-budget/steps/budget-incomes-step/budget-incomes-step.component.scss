@@ -1,0 +1,335 @@
+@import 'abstracts/variables';
+
+.budget-incomes-step {
+  animation: fadeInUp 0.5s ease-out;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-lg;
+    margin-bottom: $spacing-xl;
+    padding: $spacing-lg;
+    background: linear-gradient(
+      135deg,
+      rgba($success-color, 0.1) 0%,
+      rgba($primary-color, 0.1) 100%
+    );
+    border-radius: $border-radius-lg;
+    border: 1px solid rgba($success-color, 0.2);
+  }
+
+  &__icon {
+    width: 64px;
+    height: 64px;
+    border-radius: $border-radius-md;
+    background: linear-gradient(135deg, $success-color 0%, #10b981 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: $shadow-lg;
+
+    .material-icons {
+      font-size: 32px;
+      color: white;
+    }
+  }
+
+  &__title {
+    flex: 1;
+
+    h2 {
+      font-size: $font-size-2xl;
+      font-weight: 700;
+      color: $text-primary;
+      margin: 0 0 $spacing-xs 0;
+    }
+
+    p {
+      font-size: $font-size-md;
+      color: $text-secondary;
+      margin: 0;
+    }
+  }
+}
+
+.income-form {
+  margin-bottom: $spacing-xl;
+
+  &__card {
+    background: $bg-secondary;
+    border-radius: $border-radius-lg;
+    padding: $spacing-xl;
+    box-shadow: $shadow-md;
+    border: 2px solid rgba($success-color, 0.2);
+    transition: all $transition-normal;
+
+    &:hover {
+      border-color: rgba($success-color, 0.4);
+      box-shadow: $shadow-lg;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+
+    .material-icons {
+      font-size: 28px;
+      color: $success-color;
+    }
+
+    h3 {
+      font-size: $font-size-xl;
+      font-weight: 600;
+      color: $text-primary;
+      margin: 0;
+    }
+  }
+
+  &__fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-lg;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__field {
+    width: 100%;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.income-list {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-lg;
+
+    h3 {
+      font-size: $font-size-xl;
+      font-weight: 600;
+      color: $text-primary;
+      margin: 0;
+    }
+  }
+
+  &__count {
+    padding: $spacing-xs $spacing-md;
+    background: rgba($success-color, 0.1);
+    color: $success-color;
+    border-radius: $border-radius-sm;
+    font-size: $font-size-sm;
+    font-weight: 600;
+  }
+
+  &__empty {
+    padding: $spacing-xxl;
+  }
+
+  &__items {
+    display: grid;
+    gap: $spacing-md;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: $spacing-xxl;
+  background: $bg-secondary;
+  border-radius: $border-radius-lg;
+  border: 2px dashed $gray-700;
+
+  .material-icons {
+    font-size: 64px;
+    color: $text-muted;
+    margin-bottom: $spacing-md;
+    opacity: 0.5;
+  }
+
+  h4 {
+    font-size: $font-size-lg;
+    color: $text-secondary;
+    margin: 0 0 $spacing-sm 0;
+  }
+
+  p {
+    font-size: $font-size-md;
+    color: $text-muted;
+    margin: 0;
+  }
+}
+
+.income-card {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  background: $bg-secondary;
+  border-radius: $border-radius-lg;
+  border: 1px solid rgba($success-color, 0.2);
+  transition: all $transition-normal;
+  animation: slideIn 0.3s ease-out;
+
+  &:hover {
+    border-color: $success-color;
+    box-shadow: $shadow-md;
+    transform: translateX(4px);
+  }
+
+  &__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: $border-radius-md;
+    background: rgba($success-color, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    .material-icons {
+      font-size: 24px;
+      color: $success-color;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__number {
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $text-secondary;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: $spacing-md;
+
+    .label {
+      font-size: $font-size-sm;
+      color: $text-muted;
+      font-weight: 500;
+    }
+
+    .value {
+      font-size: $font-size-md;
+      color: $text-primary;
+      font-weight: 600;
+    }
+
+    &--amount .value {
+      color: $success-color;
+      font-size: $font-size-lg;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+    flex-shrink: 0;
+  }
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: $border-radius-sm;
+  border: 1px solid $gray-700;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all $transition-normal;
+
+  .material-icons {
+    font-size: 20px;
+    color: $text-secondary;
+  }
+
+  &:hover {
+    background: $bg-tertiary;
+  }
+
+  &--danger {
+    &:hover {
+      background: rgba($error-color, 0.1);
+      border-color: $error-color;
+
+      .material-icons {
+        color: $error-color;
+      }
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .budget-incomes-step {
+    &__header {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+
+  .income-form {
+    &__fields {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .income-card {
+    flex-direction: column;
+    align-items: flex-start;
+
+    &__actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}

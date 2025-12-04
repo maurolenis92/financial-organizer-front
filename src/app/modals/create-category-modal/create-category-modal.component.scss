@@ -1,0 +1,238 @@
+@import '../../../styles/abstracts/variables';
+
+.create-category-modal {
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background: $bg-primary;
+  color: $text-primary;
+  border-radius: $border-radius-lg;
+  overflow: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-lg;
+  border-bottom: 1px solid $gray-700;
+
+  h2 {
+    margin: 0;
+    font-size: $font-size-xl;
+    font-weight: 700;
+    color: $text-primary;
+  }
+
+  .close-button {
+    width: 32px;
+    height: 32px;
+    border-radius: $border-radius-sm;
+    border: none;
+    background: transparent;
+    color: $text-secondary;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-normal;
+
+    &:hover {
+      background: $bg-tertiary;
+      color: $text-primary;
+    }
+
+    .material-icons {
+      font-size: 20px;
+    }
+  }
+}
+
+.modal-body {
+  padding: $spacing-xl;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $bg-secondary;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $gray-700;
+    border-radius: $border-radius-sm;
+
+    &:hover {
+      background: $text-secondary;
+    }
+  }
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.section-label {
+  font-size: $font-size-sm;
+  font-weight: 600;
+  color: $text-primary;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: $spacing-sm;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: $spacing-xs;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $bg-tertiary;
+    border-radius: $border-radius-sm;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $gray-700;
+    border-radius: $border-radius-sm;
+
+    &:hover {
+      background: $text-secondary;
+    }
+  }
+}
+
+.icon-option {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: $border-radius-md;
+  border: 2px solid $gray-700;
+  background: $bg-secondary;
+  cursor: pointer;
+  transition: all $transition-normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .material-icons {
+    color: $text-secondary;
+    font-size: 24px;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    border-color: $primary-color;
+    background: $bg-tertiary;
+
+    .material-icons {
+      color: $primary-color;
+    }
+  }
+
+  &--selected {
+    border-color: $primary-color;
+    background: rgba($primary-color, 0.1);
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+
+    .material-icons {
+      color: $primary-color;
+    }
+  }
+}
+
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: $spacing-md;
+}
+
+.color-option {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: $border-radius-md;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all $transition-normal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .material-icons {
+    color: white;
+    font-size: 24px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: $shadow-lg;
+  }
+
+  &--selected {
+    border-color: white;
+    box-shadow:
+      0 0 0 2px $bg-primary,
+      0 0 0 4px currentColor;
+  }
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  border-top: 1px solid $gray-700;
+}
+
+@media (max-width: 768px) {
+  .create-category-modal {
+    max-height: 95vh;
+  }
+
+  .icon-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .color-grid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  .modal-body {
+    padding: $spacing-md;
+  }
+
+  .modal-header {
+    padding: $spacing-md;
+
+    h2 {
+      font-size: $font-size-lg;
+    }
+  }
+
+  .modal-footer {
+    padding: $spacing-md;
+    flex-direction: column;
+
+    fs-button {
+      width: 100%;
+    }
+  }
+}
