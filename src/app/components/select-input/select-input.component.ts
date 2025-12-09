@@ -37,7 +37,7 @@ export class SelectInputComponent implements ControlValueAccessor {
   @Input() public searchable: boolean = false;
 
   public disabled: boolean = false;
-  public value: string = '';
+  public value: any = '';
 
   private onChange = (value: any): void => {};
   public onTouched = (): void => {};
@@ -50,7 +50,12 @@ export class SelectInputComponent implements ControlValueAccessor {
 
   // Implementación de ControlValueAccessor
   public writeValue(value: any): void {
-    this.value = value || '';
+    if (typeof value === 'string' || value === null) {
+      this.value = this.options.find(option => option.value === value) || '';
+    }
+    if (typeof value === 'object' && value !== null) {
+      this.value = value.value || '';
+    }
   }
 
   public registerOnChange(fn: any): void {

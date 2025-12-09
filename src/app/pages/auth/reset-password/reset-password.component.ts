@@ -1,36 +1,29 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   FormBuilder,
   FormControl,
   FormGroup,
-  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { InputComponent } from '../../../components/input/input.component';
-import { ButtonComponent } from '../../../components/button/button.component';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../services/auth.service';
+import { ButtonComponent } from '../../../components/button/button.component';
+import { InputComponent } from '../../../components/input/input.component';
 import { EmailValidator } from '../../../utils/custom-validators';
 import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-sign-up',
+  selector: 'app-reset-password',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    InputComponent,
-    ButtonComponent,
-  ],
-  templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.scss',
+  imports: [ReactiveFormsModule, CommonModule, ButtonComponent, InputComponent],
+  templateUrl: './reset-password.component.html',
+  styleUrl: './reset-password.component.scss',
 })
-export class SignUpComponent implements OnInit, OnDestroy {
+export class ResetPasswordComponent implements OnInit, OnDestroy {
   public form!: FormGroup;
-  public verificationForm!: FormGroup;
+  public resetForm!: FormGroup;
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
@@ -39,46 +32,81 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public buttonDisabled: boolean = true;
   public errorMessage: string = '';
   public successMessage: string = '';
-  public showVerification: boolean = false;
+  public showResetForm: boolean = false;
   public userEmail: string = '';
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       email: new FormControl('', [Validators.required, EmailValidator()]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      confirmPassword: new FormControl('', [Validators.required]),
     });
 
-    this.verificationForm = this.fb.group({
+    this.resetForm = this.fb.group({
       code: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      newPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      confirmPassword: new FormControl('', [Validators.required]),
     });
 
     this.form.valueChanges
       .pipe(distinctUntilChanged(), takeUntil(this.$destroy))
       .subscribe(() => {
-        this.buttonDisabled = this.form.status === 'INVALID' || !this.passwordsMatch();
+        this.buttonDisabled = this.form.invalid;
         this.errorMessage = '';
+        this.successMessage = '';
       });
 
-    this.verificationForm.valueChanges
+    this.resetForm.valueChanges
       .pipe(distinctUntilChanged(), takeUntil(this.$destroy))
       .subscribe(() => {
-        this.buttonDisabled = this.verificationForm.invalid;
+        this.buttonDisabled = this.resetForm.invalid || !this.passwordsMatch();
         this.errorMessage = '';
+        this.successMessage = '';
       });
   }
 
   public passwordsMatch(): boolean {
-    const password = this.form.get('password')?.value;
-    const confirmPassword = this.form.get('confirmPassword')?.value;
+    const password = this.resetForm.get('newPassword')?.value;
+    const confirmPassword = this.resetForm.get('confirmPassword')?.value;
     return password === confirmPassword;
   }
 
-  public signUp(): void {
-    if (this.form.invalid || !this.passwordsMatch()) {
-      Object.keys(this.form.controls).forEach(field => {
-        const control = this.form.get(field);
+  public resetPassword(): void {
+    if (this.form.invalid) {
+      this.form.get('email')?.markAsDirty({ onlySelf: true });
+      return;
+    }
+
+    this.buttonDisabled = true;
+    this.loading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    const email = this.form.value.email;
+    this.userEmail = email;
+
+    this.authService
+      .resetPassword(email)
+      .then(() => {
+        this.loading = false;
+        this.showResetForm = true;
+        this.buttonDisabled = true;
+        this.successMessage =
+          '¡Correo enviado! Ingresa el código que recibiste y tu nueva contraseña.';
+      })
+      .catch(error => {
+        this.loading = false;
+        this.buttonDisabled = false;
+        if (error.code === 'UserNotFoundException') {
+          this.errorMessage = 'No existe una cuenta con este correo electrónico.';
+        } else {
+          this.errorMessage = 'Error al enviar el correo. Intenta nuevamente.';
+        }
+      });
+  }
+
+  public confirmReset(): void {
+    if (this.resetForm.invalid || !this.passwordsMatch()) {
+      Object.keys(this.resetForm.controls).forEach(field => {
+        const control = this.resetForm.get(field);
         control?.markAsDirty({ onlySelf: true });
       });
       if (!this.passwordsMatch()) {
@@ -91,44 +119,15 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.errorMessage = '';
 
-    const email = this.form.value.email;
-    this.userEmail = email;
-
     this.authService
-      .signUp(email, this.form.value.password, this.form.value.name)
+      .confirmResetPassword(
+        this.userEmail,
+        this.resetForm.value.code,
+        this.resetForm.value.newPassword
+      )
       .then(() => {
         this.loading = false;
-        this.showVerification = true;
-        this.buttonDisabled = true;
-        this.successMessage =
-          '¡Registro exitoso! Revisa tu correo para obtener el código de verificación.';
-      })
-      .catch(error => {
-        this.loading = false;
-        this.buttonDisabled = false;
-        if (error.code === 'UsernameExistsException') {
-          this.errorMessage = 'Este correo ya está registrado.';
-        } else {
-          this.errorMessage = 'Error al crear la cuenta. Intenta de nuevo.';
-        }
-      });
-  }
-
-  public verifyCode(): void {
-    if (this.verificationForm.invalid) {
-      this.verificationForm.get('code')?.markAsDirty({ onlySelf: true });
-      return;
-    }
-
-    this.buttonDisabled = true;
-    this.loading = true;
-    this.errorMessage = '';
-
-    this.authService
-      .confirmSignUp(this.userEmail, this.verificationForm.value.code)
-      .then(() => {
-        this.loading = false;
-        this.successMessage = '¡Cuenta verificada exitosamente! Redirigiendo...';
+        this.successMessage = '¡Contraseña restablecida exitosamente! Redirigiendo...';
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 1500);
@@ -141,7 +140,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
         } else if (error.code === 'ExpiredCodeException') {
           this.errorMessage = 'El código ha expirado. Solicita uno nuevo.';
         } else {
-          this.errorMessage = 'Error al verificar el código. Intenta de nuevo.';
+          this.errorMessage = 'Error al restablecer la contraseña. Intenta de nuevo.';
         }
       });
   }
@@ -151,9 +150,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.errorMessage = '';
     this.successMessage = '';
 
-    // Reenviar código usando el mismo método signUp
     this.authService
-      .signUp(this.userEmail, this.form.value.password, this.form.value.name)
+      .resetPassword(this.userEmail)
       .then(() => {
         this.loading = false;
         this.successMessage = 'Código reenviado. Revisa tu correo.';

@@ -18,6 +18,14 @@ export const routes: Routes = [
   //   canActivate: [loginGuard], // Redirige a dashboard si ya está logueado
   // },
   {
+    path: 'reset-password',
+    loadComponent: () =>
+      import('./pages/auth/reset-password/reset-password.component').then(
+        m => m.ResetPasswordComponent
+      ),
+    canActivate: [loginGuard], // Redirige a dashboard si ya está logueado
+  },
+  {
     path: 'dashboard',
     loadComponent: () =>
       import('./layouts/dashboard-layout/dashboard-layout.component').then(
