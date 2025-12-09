@@ -1,53 +1,143 @@
-<div class="budgets__header">
-  <h1>Presupuestos</h1>
-  <fs-button (click)="newBudget()" icon="add" label="Nuevo presupuesto"></fs-button>
-</div>
+<div class="budgets">
+  <div class="budgets__header">
+    <div class="budgets__header-info">
+      <h1>Mis Presupuestos</h1>
+      <p>Administra y visualiza todos tus presupuestos</p>
+    </div>
+    <fs-button (click)="newBudget()" icon="add" label="Nuevo presupuesto"></fs-button>
+  </div>
 
-<form [formGroup]="form" class="budgets__filter">
-  <fs-input
-    label="Nombre del presupuesto"
-    type="text"
-    id="budget-name"
-    placeholder="Ejemplo: Presupuesto mensual"
-    [width]="'100%'"
-  ></fs-input>
-  <fs-select-input
-    label="Categoría"
-    formControlName="category"
-    id="budget-category"
-    [options]="[
-      { value: 'food', label: 'Alimentación' },
-      { value: 'transport', label: 'Transporte' },
-      { value: 'entertainment', label: 'Entretenimiento' },
-    ]"
-    placeholder="Selecciona una categoría"
-    [width]="'100%'"
-  ></fs-select-input>
-  <fs-date-picker
-    formControlName="startDate"
-    [label]="'Rango de fechas'"
-    [mode]="'single'"
-  ></fs-date-picker>
-  <fs-button icon="clear" label="limpiar filtro"></fs-button>
-</form>
+  <form [formGroup]="form" class="budgets__filter">
+    <fs-input
+      label="Buscar presupuesto"
+      type="text"
+      id="budget-name"
+      placeholder="Buscar por nombre..."
+      [width]="'100%'"
+    ></fs-input>
+    <fs-select-input
+      label="Moneda"
+      formControlName="category"
+      id="budget-category"
+      [options]="[
+        { value: 'COP', label: 'COP - Peso Colombiano' },
+        { value: 'USD', label: 'USD - Dólar' },
+        { value: 'EUR', label: 'EUR - Euro' },
+      ]"
+      placeholder="Todas las monedas"
+      [width]="'100%'"
+    ></fs-select-input>
+    <fs-date-picker
+      formControlName="startDate"
+      [label]="'Fecha de inicio'"
+      [mode]="'single'"
+    ></fs-date-picker>
+    <fs-button icon="clear" label="Limpiar filtros"></fs-button>
+  </form>
 
-<div class="budgets__cards">
-  @for (item of budgets$().budgets; track $index) {
-    <fs-generic-card [title]="item.name">
-      <div card-content class="budgets__card-content">
-        <span>{{ item.startDate | date }} - {{ item.endDate | date }}</span>
-        <span>{{ item.currency }}</span>
-        <span
-          >{{
-            item.availableMoney | currency: item.currency : 'symbol-narrow'
-          }}
-          Disponible</span
-        >
-        <mat-progress-bar
-          mode="determinate"
-          [value]="(item.availableMoney / item.totalIncomes) * 100"
-        ></mat-progress-bar>
+  @if (budgets$().budgets.length > 0) {
+    <div class="budgets__cards">
+      @for (item of budgets$().budgets; track item.id) {
+        <div class="budget-card" [attr.data-status]="getStatus(item)">
+          <div class="budget-card__header">
+            <div class="budget-card__title-row">
+              <h3>{{ item.name }}</h3>
+              <div class="budget-card__title-actions">
+                <span class="budget-card__badge" [attr.data-status]="getStatus(item)">
+                  {{ getStatusLabel(item) }}
+                </span>
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  class="budget-card__menu-btn"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="duplicateBudget(item)">
+                    <mat-icon>content_copy</mat-icon>
+                    <span>Crear copia</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteBudget(item.id, item.name)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Eliminar</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+            <div class="budget-card__date-range">
+              <span class="material-icons">event</span>
+              <span
+                >{{ item.startDate | date: 'dd MMM' }} -
+                {{ item.endDate | date: 'dd MMM yyyy' }}</span
+              >
+            </div>
+          </div>
+
+          <div class="budget-card__stats">
+            <div class="stat-item">
+              <span class="stat-item__label">Ingresos:</span>
+              <span class="stat-item__value stat-item__value--income">
+                {{
+                  item.totalIncomes | currency: item.currency : 'symbol-narrow' : '1.0-0'
+                }}
+              </span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-item__label">Gastos:</span>
+              <span class="stat-item__value stat-item__value--expense">
+                {{
+                  item.totalExpenses | currency: item.currency : 'symbol-narrow' : '1.0-0'
+                }}
+              </span>
+            </div>
+            <div class="stat-item stat-item--highlight">
+              <span class="stat-item__label">Disponible:</span>
+              <span class="stat-item__value stat-item__value--available">
+                {{
+                  item.availableMoney
+                    | currency: item.currency : 'symbol-narrow' : '1.0-0'
+                }}
+              </span>
+            </div>
+          </div>
+
+          <div class="budget-card__progress">
+            <div class="progress-info">
+              <span class="progress-info__label">Progreso del presupuesto</span>
+              <span class="progress-info__value" [style.color]="getProgressColor(item)">
+                {{ item.percentageUsed | number: '1.0-0' }}%
+              </span>
+            </div>
+            <mat-progress-bar
+              mode="determinate"
+              [value]="item.percentageUsed"
+              [color]="getProgressBarColor(item)"
+            ></mat-progress-bar>
+          </div>
+
+          <div class="budget-card__footer">
+            <div class="budget-card__days">
+              <span class="material-icons">schedule</span>
+              <span>{{ item.daysRemaining }} días restantes</span>
+            </div>
+            <fs-button
+              label="Ver detalles"
+              variant="secondary"
+              (click)="viewBudget(item.id)"
+            ></fs-button>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="budgets__empty">
+      <div class="empty-state">
+        <span class="material-icons">account_balance_wallet</span>
+        <h3>No tienes presupuestos</h3>
+        <p>Crea tu primer presupuesto para comenzar a administrar tus finanzas</p>
+        <fs-button (click)="newBudget()" icon="add" label="Crear presupuesto"></fs-button>
       </div>
-    </fs-generic-card>
+    </div>
   }
 </div>

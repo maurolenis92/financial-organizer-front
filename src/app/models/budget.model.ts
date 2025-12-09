@@ -40,5 +40,6 @@ export interface Expense {
   amount: number;
   concept: string;
   category: Category;
+  categoryId: string;
   status: SelectOption;
 }

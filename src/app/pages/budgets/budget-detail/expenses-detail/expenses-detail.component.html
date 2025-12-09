@@ -1,0 +1,84 @@
+<div class="expenses-detail">
+  <!-- Formulario para agregar gasto -->
+  <div class="add-expense-form" [formGroup]="formExpense">
+    <div class="form-fields">
+      <fs-input
+        formControlName="concept"
+        label="Concepto"
+        type="text"
+        placeholder="Ej: Alquiler, Comida, Transporte"
+      ></fs-input>
+      <fs-input
+        formControlName="amount"
+        label="Monto"
+        type="number"
+        placeholder="0.00"
+      ></fs-input>
+      <fs-select-input
+        formControlName="category"
+        [options]="categoriresOptions"
+        label="Categoría"
+        placeholder="Selecciona una categoría"
+      ></fs-select-input>
+      <fs-select-input
+        formControlName="status"
+        [options]="statusOptions"
+        label="Estado"
+        placeholder="Selecciona el estado"
+      ></fs-select-input>
+    </div>
+    <div class="form-actions">
+      <fs-button
+        [disabled]="buttonDisabled"
+        (click)="addExpense()"
+        label="Agregar Gasto"
+        icon="add"
+      ></fs-button>
+    </div>
+  </div>
+
+  <!-- Lista de gastos -->
+  <div class="expenses-list">
+    <!-- Headers -->
+    <div class="expenses-list__header">
+      <span class="header-cell header-cell--concept">Concepto</span>
+      <span class="header-cell header-cell--amount">Monto</span>
+      <span class="header-cell header-cell--category">Categoría</span>
+      <span class="header-cell header-cell--status">Estado</span>
+      <span class="header-cell header-cell--actions"></span>
+    </div>
+
+    <!-- Rows -->
+    <div class="expenses-list__body">
+      @for (item of getControls(); track $index) {
+        <div class="expense-row" [formGroup]="getGroup($index)">
+          <div class="row-cell row-cell--concept">
+            <fs-input formControlName="concept"></fs-input>
+          </div>
+          <div class="row-cell row-cell--amount">
+            <fs-input formControlName="amount"></fs-input>
+          </div>
+          <div class="row-cell row-cell--category">
+            <fs-select-input
+              formControlName="categoryId"
+              [options]="categoriresOptions"
+              placeholder="Categoría"
+            ></fs-select-input>
+          </div>
+          <div class="row-cell row-cell--status">
+            <fs-select-input
+              formControlName="status"
+              [options]="statusOptions"
+              placeholder="Estado"
+            ></fs-select-input>
+          </div>
+          <div class="row-cell row-cell--actions">
+            <button class="delete-btn" type="button" (click)="removeExpense($index)">
+              <span class="material-icons">delete</span>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

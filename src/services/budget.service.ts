@@ -28,7 +28,7 @@ export class BudgetService {
   }
 
   public getBudgetById(budgetId: string): Observable<BudgetDetail> {
-    return this.http.get<BudgetDetail>('budgets', { params: { id: budgetId } });
+    return this.http.get<BudgetDetail>(`budgets/${budgetId}`);
   }
 
   public updateBudget(budgetId: string, budgetData: BudgetDetail): Observable<unknown> {

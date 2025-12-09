@@ -20,7 +20,7 @@ import { getErrorMessage } from '../../utils/custom-validators';
   styleUrl: './input.component.scss',
 })
 export class InputComponent implements ControlValueAccessor, OnInit {
-  @Input() public label: string = 'Input';
+  @Input() public label: string = '';
   @Input() public type: string = 'text';
   @Input() public placeholder: string = '';
   @Input() public id: string = '';
