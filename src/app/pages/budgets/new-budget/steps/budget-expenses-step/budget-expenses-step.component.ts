@@ -104,11 +104,6 @@ export class BudgetExpensesStepComponent implements OnInit, OnChanges, OnDestroy
           value: newCategoryId,
         };
 
-        // this.categories = [
-        //   ...this.categories.filter(cat => cat.value !== this.NEW_CATEGORY_VALUE),
-        //   newCategory,
-        //   { label: '+ Nueva Categoría', value: this.NEW_CATEGORY_VALUE },
-        // ];
         this.categoriesInput.push({
           id: newCategoryId,
           name: result.name,
@@ -118,14 +113,9 @@ export class BudgetExpensesStepComponent implements OnInit, OnChanges, OnDestroy
         this.categories.push(newCategory);
 
         // Auto-seleccionar la nueva categoría
-        this.formExpense.patchValue({ category: newCategoryId });
-
-        // TODO: Aquí deberías actualizar el UserService o hacer un API call
-        // para persistir la nueva categoría
-        console.log('Nueva categoría creada:', { id: newCategoryId, ...result });
+        this.formExpense.get('category')?.setValue(newCategory);
       } else {
-        // Si se canceló, limpiar la selección
-        this.formExpense.patchValue({ category: '' });
+        this.formExpense.get('category')?.setValue('');
       }
     });
   }
