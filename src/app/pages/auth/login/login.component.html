@@ -46,6 +46,11 @@
           [width]="'100%'"
         ></fs-input>
 
+        <!-- Forgot password link -->
+        <div class="forgot-password">
+          <a (click)="goToResetPassword()" class="link">¿Olvidaste tu contraseña?</a>
+        </div>
+
         @if (errorMessage) {
           <span class="error-message">
             {{ errorMessage }}
