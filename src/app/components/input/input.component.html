@@ -10,8 +10,8 @@
       [ngClass]="[variant, showErrors ? 'input-error' : '']"
       [style.width]="width"
       [formControl]="internalControl"
-      CurrencyMask
-      [currencyMask]="currencyOptions"
+      currencyMask
+      [options]="currencyOptions"
     />
   } @else {
     <input
