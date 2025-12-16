@@ -30,10 +30,6 @@ body {
 }
 
 // Scrollbar personalizada (webkit)
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
 
 ::-webkit-scrollbar-track {
   background: $bg-secondary;
@@ -67,6 +63,8 @@ a {
 
   &:hover {
     color: $primary-light;
+    cursor: pointer;
+    text-decoration: underline;
   }
 
   &:focus {
@@ -145,16 +143,6 @@ button {
 img {
   max-width: 100%;
   height: auto;
-}
-
-// Lists
-ul,
-ol {
-  padding-left: $spacing-lg;
-}
-
-li {
-  margin-bottom: $spacing-xs;
 }
 
 // HR

@@ -2,84 +2,85 @@
 // Variables - Colores
 // ==========================================================================
 
-// Colores primarios (ajustados para dark theme)
-$primary-color: #7c3aed; // Violeta más vibrante
-$primary-light: #a855f7; // Versión más clara
-$primary-dark: #5b21b6; // Versión más oscura
+// Colores primarios (Verde suave - Color principal FinanSmart)
+$primary-color: #22c55e; // Verde suave principal
+$primary-light: #4ade80; // Versión más clara
+$primary-dark: #16a34a; // Versión más oscura
 
-// Colores secundarios
-$secondary-color: #06b6d4; // Cyan complementario
-$secondary-light: #22d3ee;
-$secondary-dark: #0891b2;
+// Colores secundarios (Slate oscuro)
+$secondary-color: #1e293b; // Slate oscuro
+$secondary-light: #334155;
+$secondary-dark: #0f172a;
 
-// Colores de acento
-$accent-color: #f59e0b; // Amarillo/naranja para highlights
-$accent-light: #fbbf24;
-$accent-dark: #d97706;
+// Colores de acento (Naranja para highlights)
+$accent-color: #f97316; // Naranja
+$accent-light: #fb923c;
+$accent-dark: #ea580c;
 
-// Colores de estado (ajustados para dark)
-$success-color: #10b981;
+// Colores de estado
+$success-color: #10b981; // Verde éxito (Paid badge)
 $success-light: #34d399;
 $success-dark: #059669;
 
-$warning-color: #f59e0b;
-$warning-light: #fbbf24;
-$warning-dark: #d97706;
+$warning-color: #f97316; // Naranja (Pending badge)
+$warning-light: #fb923c;
+$warning-dark: #ea580c;
 
-$error-color: #ef4444;
+$error-color: #ef4444; // Rojo
 $error-light: #f87171;
 $error-dark: #dc2626;
 
-$info-color: #06b6d4;
+$info-color: #06b6d4; // Cyan
 $info-light: #22d3ee;
 $info-dark: #0891b2;
 
-// Colores neutros (dark theme palette)
+// Colores neutros
 $white: #ffffff;
 $black: #000000;
 
-// Dark theme grays (invertidos para dark mode)
-$gray-50: #fafafa; // Para elementos muy claros sobre dark
-$gray-100: #f4f4f5; //
-$gray-200: #e4e4e7; //
-$gray-300: #d4d4d8; // Bordes sutiles
-$gray-400: #a1a1aa; // Texto secundario claro
-$gray-500: #71717a; // Texto muted
-$gray-600: #52525b; // Elementos interactivos
-$gray-700: #3f3f46; // Fondo cards/componentes
-$gray-800: #27272a; // Fondo secundario
-$gray-900: #18181b; // Fondo principal
-$gray-950: #09090b; // Fondo más oscuro
+// Dark theme grays (slate palette)
+$gray-50: #f8fafc;
+$gray-100: #f1f5f9;
+$gray-200: #e2e8f0;
+$gray-300: #cbd5e1;
+$gray-400: #94a3b8;
+$gray-500: #64748b;
+$gray-600: #475569;
+$gray-700: #334155;
+$gray-800: #1e293b;
+$gray-900: #0f172a;
+$gray-950: #020617;
 
 // Colores de texto (dark theme)
-$text-primary: #f4f4f5; // Casi blanco para texto principal
-$text-secondary: #d4d4d8; // Gris claro para texto secundario
-$text-muted: #a1a1aa; // Gris medio para texto muted
-$text-disabled: #71717a; // Gris para texto deshabilitado
-$text-inverse: #18181b; // Negro para texto sobre fondos claros
+$text-primary: #ffffff; // Blanco para texto principal
+$text-secondary: #cbd5e1; // Texto secundario (gray-300)
+$text-muted: #94a3b8; // Texto muted (gray-400)
+$text-disabled: #64748b; // Texto deshabilitado (gray-500)
+$text-inverse: #0f172a; // Texto oscuro sobre fondos claros
 
-// Colores de fondo (dark theme)
-$bg-primary: #18181b; // Fondo principal oscuro
-$bg-secondary: #27272a; // Fondo secundario
-$bg-tertiary: #3f3f46; // Fondo de cards/componentes
-$bg-elevated: #52525b; // Fondo elevado (modals, dropdowns)
-$bg-inverse: #f4f4f5; // Fondo claro para elementos inversos
+// Colores de fondo (dark theme slate)
+
+$bg-primary: #0d131a; // Fondo principal app (muy oscuro)
+$bg-secondary: #1a202c; // Fondo secundario (cards)
+$bg-tertiary: #1e293b; // Fondo de cards/componentes (gray-800)
+$bg-elevated: #334155; // Fondo elevado (modals, dropdowns - gray-700)
+$bg-inverse: #f8fafc; // Fondo claro para elementos inversos
 
 // Fondos con transparencia para overlays
-$bg-overlay: rgba(0, 0, 0, 0.8);
-$bg-glass: rgba(255, 255, 255, 0.05);
+$bg-overlay: rgba(10, 14, 26, 0.95); // Overlay oscuro
+$bg-glass: rgba(34, 197, 94, 0.05); // Glass effect con verde sutil
 
-// Gradientes (dark theme)
-$gradient-primary: linear-gradient(135deg, $primary-color 0%, $secondary-color 100%);
-$gradient-secondary: linear-gradient(135deg, $secondary-color 0%, $primary-color 100%);
-$gradient-accent: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+// Gradientes (dark theme con verde)
+$gradient-primary: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+$gradient-secondary: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+$gradient-accent: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
 $gradient-glass: linear-gradient(
   135deg,
-  rgba(255, 255, 255, 0.1) 0%,
-  rgba(255, 255, 255, 0.05) 100%
+  rgba(34, 197, 94, 0.1) 0%,
+  rgba(34, 197, 94, 0.05) 100%
 );
 
-// Sombras (ajustadas para dark theme - más prominentes)
+// Sombras (ajustadas para dark theme)
 $shadow-sm:
   0 1px 3px rgba(0, 0, 0, 0.5),
   0 1px 2px rgba(0, 0, 0, 0.3);
@@ -93,16 +94,19 @@ $shadow-xl:
   0 20px 40px rgba(0, 0, 0, 0.7),
   0 10px 20px rgba(0, 0, 0, 0.4);
 
-// Sombras con color para elementos destacados
+// Sombras con color para elementos destacados (glow verde)
 $shadow-primary:
-  0 4px 20px rgba(124, 58, 237, 0.3),
-  0 2px 8px rgba(124, 58, 237, 0.2);
+  0 4px 20px rgba(34, 197, 94, 0.3),
+  0 2px 8px rgba(34, 197, 94, 0.2);
 $shadow-secondary:
-  0 4px 20px rgba(6, 182, 212, 0.3),
-  0 2px 8px rgba(6, 182, 212, 0.2);
+  0 4px 20px rgba(30, 41, 59, 0.4),
+  0 2px 8px rgba(30, 41, 59, 0.3);
+$shadow-accent:
+  0 4px 20px rgba(14, 165, 233, 0.3),
+  0 2px 8px rgba(14, 165, 233, 0.2);
 
 // Sombras internas para inputs y campos
-$shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+$shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.4);
 
 // Border radius
 $border-radius-sm: 4px;
@@ -112,18 +116,18 @@ $border-radius-xl: 16px;
 $border-radius-2xl: 24px;
 $border-radius-full: 50%;
 
-// Borders (dark theme)
-$border-light: 1px solid $gray-700; // Bordes sutiles
-$border-medium: 1px solid $gray-600; // Bordes normales
-$border-strong: 1px solid $gray-500; // Bordes prominentes
+// Borders (dark theme con grays tintados)
+$border-light: 1px solid $gray-600; // Bordes sutiles
+$border-medium: 1px solid $gray-500; // Bordes normales
+$border-strong: 1px solid $gray-400; // Bordes prominentes
 $border-primary: 1px solid $primary-color;
 $border-secondary: 1px solid $secondary-color;
 
 // Estados hover/focus (dark theme)
 $hover-overlay: rgba(255, 255, 255, 0.05);
-$hover-primary: rgba(124, 58, 237, 0.1);
-$hover-secondary: rgba(6, 182, 212, 0.1);
-$focus-ring: 0 0 0 3px rgba(124, 58, 237, 0.3);
+$hover-primary: rgba(0, 255, 136, 0.15); // Hover verde
+$hover-secondary: rgba(14, 165, 233, 0.15); // Hover cyan
+$focus-ring: 0 0 0 3px rgba(14, 165, 233, 0.3); // Focus ring cyan
 
 // Transiciones
 $transition-fast: 0.2s ease;

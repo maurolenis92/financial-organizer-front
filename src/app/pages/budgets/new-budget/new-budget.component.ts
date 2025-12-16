@@ -14,13 +14,23 @@ import { BudgetDetail } from '../../../models/budget.model';
 import { BudgetService } from '../../../../services/budget.service';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { BudgetCategoriesStepComponent } from './steps/budget-categories-step/budget-categories-step.component';
 
+interface Step {
+  title: string;
+  caption: string;
+  enabled: boolean;
+  completed: boolean;
+  stepIndex: number;
+  component: string;
+}
 @Component({
   selector: 'app-new-budget',
   standalone: true,
   imports: [
     CommonModule,
     BudgetInfoStepComponent,
+    BudgetCategoriesStepComponent,
     BudgetIncomesStepComponent,
     BudgetExpensesStepComponent,
     ButtonComponent,
@@ -30,9 +40,10 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './new-budget.component.scss',
 })
 export class NewBudgetComponent implements OnInit {
-  public steps = [
+  public steps: Step[] = [
     {
       title: 'Información',
+      caption: 'Detalles básicos del presupuesto',
       enabled: true,
       completed: false,
       stepIndex: 0,
@@ -40,21 +51,30 @@ export class NewBudgetComponent implements OnInit {
     },
     {
       title: 'Ingresos',
+      caption: 'Agrega los ingresos esperados',
       enabled: false,
       completed: false,
       stepIndex: 1,
       component: 'BudgetIncomesStepComponent',
     },
     {
-      title: 'Gastos',
+      title: 'Categorías',
+      caption: 'Selecciona las categorías a utilizar',
       enabled: false,
       completed: false,
       stepIndex: 2,
+      component: 'BudgetCategoriesStepComponent',
+    },
+    {
+      title: 'Gastos',
+      caption: 'Define los gastos planificados',
+      enabled: false,
+      completed: false,
+      stepIndex: 3,
       component: 'BudgetExpensesStepComponent',
     },
   ];
-
-  public currentStepIndex: number = 0;
+  public currentStep: Step = this.steps[0];
   public buttonText: string = 'Siguiente';
   public loading: boolean = false;
   public totalIncomes: number = 0;
@@ -69,6 +89,7 @@ export class NewBudgetComponent implements OnInit {
       endDate: new FormControl('', Validators.required),
     }),
     incomes: new FormArray([]),
+    categories: new FormArray([]),
     expenses: new FormArray([]),
   });
   private userService = inject(UserService);
@@ -81,6 +102,16 @@ export class NewBudgetComponent implements OnInit {
   constructor() {
     effect(() => {
       this.categories = this.userService.userCategories();
+      this.categories.forEach(category => {
+        this.getFormArray('categories').push(
+          new FormGroup({
+            id: new FormControl(category.id),
+            name: new FormControl(category.name),
+            icon: new FormControl(category.icon),
+            color: new FormControl(category.color),
+          })
+        );
+      });
     });
   }
 
@@ -90,6 +121,12 @@ export class NewBudgetComponent implements OnInit {
       .pipe(takeUntil(this.$destroy), distinctUntilChanged())
       .subscribe(() => {
         this.buttonDisabled = !this.validStep();
+      });
+    this.budgetForm
+      .get('categories')
+      ?.valueChanges.pipe(takeUntil(this.$destroy), distinctUntilChanged())
+      .subscribe(value => {
+        this.categories = value;
       });
     this.budgetForm
       .get('info')
@@ -123,29 +160,20 @@ export class NewBudgetComponent implements OnInit {
     return this.budgetForm.get('info') as FormGroup;
   }
 
-  public goToStep(stepIndex: number): void {
-    if (this.steps[stepIndex].enabled) {
-      this.currentStepIndex = stepIndex;
-    }
-    this.validateStepText();
-  }
-
   public nextStep(): void {
-    if (this.currentStepIndex === this.steps.length - 1) {
+    if (this.currentStep.stepIndex === this.steps.length - 1) {
       this.saveBudget();
       return;
     }
-    if (this.currentStepIndex < this.steps.length - 1) {
-      this.steps[this.currentStepIndex].completed = true;
-      this.currentStepIndex++;
-      this.steps[this.currentStepIndex].enabled = true;
+    if (this.currentStep.stepIndex < this.steps.length - 1) {
+      this.steps[this.currentStep.stepIndex].completed = true;
+      this.currentStep = this.steps[this.currentStep.stepIndex + 1];
+      this.steps[this.currentStep.stepIndex].enabled = true;
     }
     this.validateStepText();
   }
 
   private saveBudget(): void {
-    // Logic to save the budget goes here
-    console.log('Budget saved:', this.budgetForm.value);
     const budgetData: Partial<BudgetDetail> = {
       name: this.budgetForm.get('info')?.get('name')?.value,
       currency: this.budgetForm.get('info')?.get('currency')?.value.value,
@@ -175,8 +203,7 @@ export class NewBudgetComponent implements OnInit {
         this.router.navigate(['dashboard/budgets']);
         // Additional logic after successful budget creation can go here
       },
-      error: error => {
-        console.error('Error creating budget:', error);
+      error: () => {
         this.loading = false;
       },
     });
@@ -184,12 +211,12 @@ export class NewBudgetComponent implements OnInit {
 
   private validateStepText(): void {
     this.buttonText =
-      this.currentStepIndex === this.steps.length - 1 ? 'Finalizar' : 'Siguiente';
+      this.currentStep.stepIndex === this.steps.length - 1 ? 'Finalizar' : 'Siguiente';
   }
 
   public previousStep(): void {
-    if (this.currentStepIndex > 0) {
-      this.currentStepIndex--;
+    if (this.currentStep.stepIndex > 0) {
+      this.currentStep = this.steps[this.currentStep.stepIndex - 1];
     }
     this.validateStepText();
   }
@@ -199,16 +226,22 @@ export class NewBudgetComponent implements OnInit {
   }
 
   public validStep(): boolean {
-    switch (this.currentStepIndex) {
+    switch (this.currentStep.stepIndex) {
       case 0:
         return this.getInfoFormGroup().valid;
       case 1:
         return this.getFormArray('incomes').length > 0;
       case 2:
+        return this.getFormArray('categories').length > 0;
+      case 3:
         return this.getFormArray('expenses').length > 0;
       default:
         return false;
     }
+  }
+
+  public cancel(): void {
+    this.router.navigate(['dashboard/budgets']);
   }
 
   ngOnDestroy(): void {

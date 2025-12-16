@@ -1,189 +1,74 @@
 @import 'abstracts/variables';
 
 .expenses-detail {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-xl;
-}
-
-// Formulario para agregar gasto
-.add-expense-form {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
-  padding: $spacing-lg;
-  background: $bg-tertiary;
-  border-radius: $border-radius-lg;
-  border: 1px solid $gray-700;
-
-  .form-fields {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: $spacing-md;
-
-    fs-input,
-    fs-select-input {
-      width: 100%;
-      min-width: 0;
-    }
-  }
-
-  .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    padding-top: $spacing-sm;
-  }
-}
-
-// Lista de gastos estilo tabla
-.expenses-list {
-  background: $bg-tertiary;
-  border-radius: $border-radius-lg;
-  border: 1px solid $gray-700;
-  overflow: hidden;
-
   &__header {
-    display: grid;
-    grid-template-columns: 3fr 1.5fr 2fr 2fr 80px;
-    gap: $spacing-md;
-    padding: $spacing-md $spacing-lg;
-    background: $bg-secondary;
-    border-bottom: 2px solid $gray-700;
-
-    .header-cell {
-      font-size: $font-size-sm;
-      font-weight: 600;
-      color: $text-secondary;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: $spacing-md;
+    border-bottom: $border-light;
+    margin-bottom: $spacing-md;
+    h2 {
+      margin: 0;
+    }
+    &__total {
+      display: flex;
+      align-items: center;
+      gap: $spacing-sm;
+      // Color pendiente de ajustar a dark theme
+      background: $error-dark;
+      border-radius: $border-radius-md;
+      padding: $spacing-xs $spacing-sm;
     }
   }
-
-  &__body {
+  &__content {
     display: flex;
     flex-direction: column;
-  }
-}
-
-.expense-row {
-  display: grid;
-  grid-template-columns: 3fr 1.5fr 2fr 2fr 80px;
-  gap: $spacing-md;
-  padding: $spacing-md $spacing-lg;
-  border-bottom: 1px solid $gray-700;
-  transition: background $transition-fast;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:hover {
-    background: $hover-overlay;
-  }
-
-  .row-cell {
-    display: flex;
-    align-items: center;
-    min-width: 0; // Permite que los flex items se encojan
-
-    fs-input,
-    fs-select-input {
-      width: 100%;
-      min-width: 0; // Fuerza que respeten el contenedor
-    }
-  }
-}
-
-.delete-btn {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: 1px solid $gray-700;
-  border-radius: $border-radius-md;
-  color: $text-secondary;
-  cursor: pointer;
-  transition: all $transition-normal;
-
-  &:hover {
-    background: rgba(239, 68, 68, 0.1);
-    border-color: $error-color;
-    color: $error-color;
-  }
-
-  .material-icons {
-    font-size: 20px;
-  }
-}
-
-// Responsive
-@media (max-width: 1200px) {
-  .add-expense-form {
-    .form-fields {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  .expenses-list {
-    &__header {
-      grid-template-columns: 2fr 1fr 1.5fr 1.5fr 80px;
-    }
-  }
-
-  .expense-row {
-    grid-template-columns: 2fr 1fr 1.5fr 1.5fr 80px;
-  }
-}
-
-@media (max-width: 768px) {
-  .add-expense-form {
-    padding: $spacing-md;
-    gap: $spacing-sm;
-
-    .form-fields {
-      grid-template-columns: 1fr;
-    }
-
-    .form-actions {
-      justify-content: stretch;
-
-      fs-button {
-        width: 100%;
+    gap: $spacing-md;
+    max-height: 390px;
+    overflow-y: auto;
+    &__menu-button {
+      margin-right: 10px;
+      color: $text-muted;
+      &__item {
+        ::ng-deep .mat-mdc-menu-item-text {
+          display: flex;
+          align-items: center;
+          gap: $spacing-sm;
+        }
       }
     }
-  }
-
-  .expenses-list {
-    &__header {
-      display: none;
-    }
-
-    &__body {
-      gap: $spacing-sm;
-      padding: $spacing-sm;
-    }
-  }
-
-  .expense-row {
-    grid-template-columns: 1fr;
-    padding: $spacing-md;
-    background: $bg-secondary;
-    border-radius: $border-radius-md;
-    border: 1px solid $gray-700;
-    gap: $spacing-sm;
-
-    .row-cell {
-      width: 100%;
-
-      &--actions {
-        justify-content: flex-end;
+    &__item {
+      display: flex;
+      align-items: center;
+      padding: $spacing-sm 0;
+      border-bottom: $border-light;
+      gap: $spacing-md;
+      &:last-child {
+        border-bottom: none;
+      }
+      &__icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      &__description {
+        font-size: $font-size-md;
+        color: $text-primary;
+      }
+      &__status {
+        margin-left: auto;
+        font-size: $font-size-sm;
+        color: $text-secondary;
+      }
+      &__amount {
+        font-size: $font-size-md;
+        font-weight: bold;
+        color: $primary-color;
       }
     }
-  }
-
-  .delete-btn {
-    width: 100%;
   }
 }

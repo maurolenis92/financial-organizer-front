@@ -1,15 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { ButtonComponent } from '../../components/button/button.component';
-import { InputComponent } from '../../components/input/input.component';
-import { SelectInputComponent } from '../../components/select-input/select-input.component';
-import { DatePickerComponent } from '../../components/date-picker/date-picker.component';
 import { BudgetService } from '../../../services/budget.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-budgets',
@@ -17,33 +14,22 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule,
     ButtonComponent,
-    InputComponent,
-    SelectInputComponent,
-    DatePickerComponent,
     MatProgressBarModule,
     MatMenuModule,
     MatIconModule,
-    FormsModule,
-    ReactiveFormsModule,
   ],
   templateUrl: './budgets.component.html',
   styleUrl: './budgets.component.scss',
 })
 export class BudgetsComponent implements OnInit {
   private budgetService = inject(BudgetService);
+  private userService = inject(UserService);
   private router = inject(Router);
-  public form: FormGroup = new FormGroup({
-    budgetName: new FormControl(''),
-    category: new FormControl(''),
-    startDate: new FormControl(''),
-  });
   public budgets$ = this.budgetService.budgets;
 
   ngOnInit(): void {
     this.budgetService.getBudgets().subscribe();
-    this.form.valueChanges.subscribe(value => {
-      console.log('Form changes:', value);
-    });
+    this.userService.getUserProfile().subscribe();
   }
 
   public newBudget(): void {
@@ -93,6 +79,9 @@ export class BudgetsComponent implements OnInit {
     if (confirm(`¿Estás seguro de eliminar el presupuesto "${name}"?`)) {
       // TODO: Implementar llamada al servicio para eliminar
       console.log('Eliminar presupuesto:', id);
+      this.budgetService.deleteBudget(id).subscribe(() => {
+        this.budgetService.getBudgets().subscribe();
+      });
     }
   }
 

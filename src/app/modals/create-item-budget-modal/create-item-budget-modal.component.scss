@@ -1,0 +1,52 @@
+@import 'abstracts/variables';
+
+.create-income-modal {
+  background: $bg-primary;
+  border-radius: $border-radius-lg;
+  border: $border-light;
+  padding: $spacing-lg;
+  width: 100%;
+  position: relative;
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-lg;
+    margin-bottom: $spacing-lg;
+    border-bottom: 1px solid $gray-700;
+
+    h2 {
+      margin: 0;
+      font-size: $font-size-xl;
+      font-weight: 700;
+      color: $text-primary;
+    }
+    .close-button {
+      width: 32px;
+      height: 32px;
+      border-radius: $border-radius-sm;
+      border: none;
+      background: transparent;
+      color: $text-secondary;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all $transition-normal;
+
+      &:hover {
+        background: $bg-tertiary;
+        color: $text-primary;
+      }
+
+      .material-icons {
+        font-size: 20px;
+      }
+    }
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+}

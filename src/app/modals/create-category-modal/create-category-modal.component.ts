@@ -36,6 +36,7 @@ export class CreateCategoryModalComponent {
     { name: 'Púrpura', value: '#8b5cf6' },
     { name: 'Cyan', value: '#06b6d4' },
     { name: 'Gris', value: '#71717a' },
+    { name: 'Negro', value: '#000000' },
   ];
 
   public predefinedIcons = [

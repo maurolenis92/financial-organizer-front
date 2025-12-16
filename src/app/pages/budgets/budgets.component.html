@@ -4,36 +4,14 @@
       <h1>Mis Presupuestos</h1>
       <p>Administra y visualiza todos tus presupuestos</p>
     </div>
-    <fs-button (click)="newBudget()" icon="add" label="Nuevo presupuesto"></fs-button>
+    <fs-button
+      (click)="newBudget()"
+      icon="add"
+      type="button"
+      id="btn-new-budget"
+      label="Nuevo presupuesto"
+    ></fs-button>
   </div>
-
-  <form [formGroup]="form" class="budgets__filter">
-    <fs-input
-      label="Buscar presupuesto"
-      type="text"
-      id="budget-name"
-      placeholder="Buscar por nombre..."
-      [width]="'100%'"
-    ></fs-input>
-    <fs-select-input
-      label="Moneda"
-      formControlName="category"
-      id="budget-category"
-      [options]="[
-        { value: 'COP', label: 'COP - Peso Colombiano' },
-        { value: 'USD', label: 'USD - Dólar' },
-        { value: 'EUR', label: 'EUR - Euro' },
-      ]"
-      placeholder="Todas las monedas"
-      [width]="'100%'"
-    ></fs-select-input>
-    <fs-date-picker
-      formControlName="startDate"
-      [label]="'Fecha de inicio'"
-      [mode]="'single'"
-    ></fs-date-picker>
-    <fs-button icon="clear" label="Limpiar filtros"></fs-button>
-  </form>
 
   @if (budgets$().budgets.length > 0) {
     <div class="budgets__cards">

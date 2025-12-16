@@ -31,10 +31,13 @@ export class BudgetService {
     return this.http.get<BudgetDetail>(`budgets/${budgetId}`);
   }
 
+  public deleteBudget(budgetId: string): Observable<unknown> {
+    return this.http.delete<unknown>(`budgets/${budgetId}`);
+  }
+
   public updateBudget(budgetId: string, budgetData: BudgetDetail): Observable<unknown> {
-    return this.http.put<unknown>('budgets', {
+    return this.http.put<unknown>(`budgets/${budgetId}`, {
       body: budgetData,
-      params: { id: budgetId },
     });
   }
 }

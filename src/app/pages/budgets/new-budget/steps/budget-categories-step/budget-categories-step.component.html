@@ -1,0 +1,26 @@
+<div class="budget-categories">
+  <div class="header">
+    <h3>Categorías de Presupuesto</h3>
+    <fs-button label="Agregar categoría" icon="add" (click)="addCategory()"></fs-button>
+  </div>
+  <div class="content">
+    <h3>Categorías existentes</h3>
+    @for (item of getControls(); track $index) {
+      <div class="content__row">
+        <div class="content__icon" [style.background]="item.get('color')?.value">
+          <span class="material-icons">{{ item.get('icon')?.value }}</span>
+        </div>
+        <span>{{ item.get('name')?.value }}</span>
+        @if (item.get('id')?.value.startsWith('temp')) {
+          <button type="button" (click)="removeCategory($index)">
+            <span class="material-icons">delete</span>
+          </button>
+        }
+      </div>
+    } @empty {
+      <div class="content__empty">
+        <p>No se han agregado categorías al usuario. Agrega una para comenzar.</p>
+      </div>
+    }
+  </div>
+</div>

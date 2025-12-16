@@ -1,84 +1,56 @@
 <div class="expenses-detail">
-  <!-- Formulario para agregar gasto -->
-  <div class="add-expense-form" [formGroup]="formExpense">
-    <div class="form-fields">
-      <fs-input
-        formControlName="concept"
-        label="Concepto"
-        type="text"
-        placeholder="Ej: Alquiler, Comida, Transporte"
-      ></fs-input>
-      <fs-input
-        formControlName="amount"
-        label="Monto"
-        type="number"
-        placeholder="0.00"
-      ></fs-input>
-      <fs-select-input
-        formControlName="category"
-        [options]="categoriresOptions"
-        label="Categoría"
-        placeholder="Selecciona una categoría"
-      ></fs-select-input>
-      <fs-select-input
-        formControlName="status"
-        [options]="statusOptions"
-        label="Estado"
-        placeholder="Selecciona el estado"
-      ></fs-select-input>
-    </div>
-    <div class="form-actions">
-      <fs-button
-        [disabled]="buttonDisabled"
-        (click)="addExpense()"
-        label="Agregar Gasto"
-        icon="add"
-      ></fs-button>
+  <div class="expenses-detail__header">
+    <h2>Gastos</h2>
+    <div class="expenses-detail__header__total">
+      <span class="material-icons">trending_down</span>
+      <span> {{ totalExpenses | currency: currency : 'symbol-narrow' : '1.2-2' }}</span>
     </div>
   </div>
-
-  <!-- Lista de gastos -->
-  <div class="expenses-list">
-    <!-- Headers -->
-    <div class="expenses-list__header">
-      <span class="header-cell header-cell--concept">Concepto</span>
-      <span class="header-cell header-cell--amount">Monto</span>
-      <span class="header-cell header-cell--category">Categoría</span>
-      <span class="header-cell header-cell--status">Estado</span>
-      <span class="header-cell header-cell--actions"></span>
-    </div>
-
-    <!-- Rows -->
-    <div class="expenses-list__body">
-      @for (item of getControls(); track $index) {
-        <div class="expense-row" [formGroup]="getGroup($index)">
-          <div class="row-cell row-cell--concept">
-            <fs-input formControlName="concept"></fs-input>
-          </div>
-          <div class="row-cell row-cell--amount">
-            <fs-input formControlName="amount"></fs-input>
-          </div>
-          <div class="row-cell row-cell--category">
-            <fs-select-input
-              formControlName="categoryId"
-              [options]="categoriresOptions"
-              placeholder="Categoría"
-            ></fs-select-input>
-          </div>
-          <div class="row-cell row-cell--status">
-            <fs-select-input
-              formControlName="status"
-              [options]="statusOptions"
-              placeholder="Estado"
-            ></fs-select-input>
-          </div>
-          <div class="row-cell row-cell--actions">
-            <button class="delete-btn" type="button" (click)="removeExpense($index)">
-              <span class="material-icons">delete</span>
-            </button>
-          </div>
+  <div class="expenses-detail__content">
+    @for (item of expenses; track $index) {
+      <div class="expenses-detail__content__item">
+        <div
+          class="expenses-detail__content__item__icon"
+          [style.background]="item.category.color"
+        >
+          <span class="material-icons">{{ item.category.icon }}</span>
         </div>
-      }
-    </div>
+        <span class="expenses-detail__content__item__description">{{
+          item.concept
+        }}</span>
+        <span class="expenses-detail__content__item__status">
+          {{ item.status === 'PAID' ? 'Pagado' : 'Pendiente' }}
+        </span>
+        <span class="expenses-detail__content__item__amount">{{
+          item.amount | currency
+        }}</span>
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          class="expenses-detail__content__menu-button"
+        >
+          <span class="material-icons">more_vert</span>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button
+            class="expenses-detail__content__menu-button__item"
+            mat-menu-item
+            (click)="updateExpense($index)"
+          >
+            <span class="material-icons">check_circle</span>
+            <span>Cambiar estado</span>
+          </button>
+          <button
+            disabled
+            class="expenses-detail__content__menu-button__item"
+            mat-menu-item
+            (click)="deleteExpense($index)"
+          >
+            <span class="material-icons">delete</span>
+            <span>Eliminar</span>
+          </button>
+        </mat-menu>
+      </div>
+    }
   </div>
 </div>

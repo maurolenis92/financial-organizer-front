@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -13,7 +13,6 @@ import { InputComponent } from '../../../../../components/input/input.component'
 import { ButtonComponent } from '../../../../../components/button/button.component';
 import { MatIconModule } from '@angular/material/icon';
 import { scrollToTop } from '../../../../../utils/functions.util';
-import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-budget-incomes-step',
@@ -29,45 +28,32 @@ import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
   templateUrl: './budget-incomes-step.component.html',
   styleUrl: './budget-incomes-step.component.scss',
 })
-export class BudgetIncomesStepComponent implements OnInit, OnDestroy {
+export class BudgetIncomesStepComponent implements OnInit {
   @Input() public formArray!: FormArray;
   @Input() public selectedCurrency: string = 'COP';
-  public formIncome: FormGroup = new FormGroup({
-    amount: new FormControl('', Validators.required),
-    concept: new FormControl('', Validators.required),
-  });
-  public buttonDisabled: boolean = true;
-  private $destroy: Subject<void> = new Subject<void>();
 
   ngOnInit(): void {
     scrollToTop();
-    this.formIncome.valueChanges
-      .pipe(takeUntil(this.$destroy), distinctUntilChanged())
-      .subscribe(() => {
-        this.buttonDisabled = this.formIncome.invalid;
-      });
   }
 
   public addIncome(): void {
     this.formArray.push(
       new FormGroup({
-        amount: new FormControl(this.formIncome.get('amount')?.value),
-        concept: new FormControl(this.formIncome.get('concept')?.value),
+        amount: new FormControl('', Validators.required),
+        concept: new FormControl('', Validators.required),
       })
     );
-    this.formIncome.reset();
   }
 
   public getControls(): AbstractControl[] {
     return this.formArray.controls;
   }
 
-  public removeIncome(index: number): void {
-    this.formArray.removeAt(index);
+  public getGroup(index: number): FormGroup {
+    return this.formArray.at(index) as FormGroup;
   }
 
-  ngOnDestroy(): void {
-    this.$destroy.next();
-    this.$destroy.complete();
+  public removeIncome(index: number): void {
+    this.formArray.removeAt(index);
   }
 }

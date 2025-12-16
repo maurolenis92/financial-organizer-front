@@ -1,56 +1,27 @@
 <div class="incomes-detail">
-  <!-- Formulario para agregar ingreso -->
-  <div class="add-income-form" [formGroup]="formIncome">
-    <div class="form-fields">
-      <fs-input
-        formControlName="concept"
-        label="Concepto"
-        type="text"
-        placeholder="Ej: Salario, Freelance, Inversiones"
-      ></fs-input>
-      <fs-input
-        formControlName="amount"
-        label="Monto"
-        type="number"
-        placeholder="0.00"
-      ></fs-input>
-    </div>
-    <div class="form-actions">
-      <fs-button
-        [disabled]="buttonDisabled"
-        (click)="addIncome()"
-        label="Agregar Ingreso"
-        icon="add"
-      ></fs-button>
+  <div class="incomes-detail__header">
+    <h2>Ingresos</h2>
+    <div class="incomes-detail__header__total">
+      <span class="material-icons">trending_up</span>
+      <span> {{ totalIncomes | currency: currency : 'symbol-narrow' : '1.2-2' }}</span>
     </div>
   </div>
-
-  <!-- Lista de ingresos -->
-  <div class="incomes-list">
-    <!-- Headers -->
-    <div class="incomes-list__header">
-      <span class="header-cell header-cell--concept">Concepto</span>
-      <span class="header-cell header-cell--amount">Monto</span>
-      <span class="header-cell header-cell--actions"></span>
-    </div>
-
-    <!-- Rows -->
-    <div class="incomes-list__body">
-      @for (item of getControls(); track $index) {
-        <div class="income-row" [formGroup]="getGroup($index)">
-          <div class="row-cell row-cell--concept">
-            <fs-input formControlName="concept"></fs-input>
-          </div>
-          <div class="row-cell row-cell--amount">
-            <fs-input formControlName="amount"></fs-input>
-          </div>
-          <div class="row-cell row-cell--actions">
-            <button class="delete-btn" type="button" (click)="removeIncome($index)">
-              <span class="material-icons">delete</span>
-            </button>
-          </div>
-        </div>
-      }
-    </div>
+  <div class="incomes-detail__content">
+    @for (item of incomes; track $index) {
+      <div class="incomes-detail__content__item">
+        <span class="incomes-detail__content__item__description">{{ item.concept }}</span>
+        <span class="incomes-detail__content__item__amount">{{
+          item.amount | currency: currency : 'symbol-narrow' : '1.2-2'
+        }}</span>
+        <button
+          disabled
+          class="delete-btn"
+          type="button"
+          (click)="deleteIncomeEntry($index)"
+        >
+          <span class="material-icons">delete</span>
+        </button>
+      </div>
+    }
   </div>
 </div>

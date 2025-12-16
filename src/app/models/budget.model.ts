@@ -1,4 +1,3 @@
-import { SelectOption } from './select.model';
 import { Category } from './user.model';
 
 export type { Category };
@@ -41,5 +40,5 @@ export interface Expense {
   concept: string;
   category: Category;
   categoryId: string;
-  status: SelectOption;
+  status: string;
 }
