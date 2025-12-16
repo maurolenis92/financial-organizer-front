@@ -5,6 +5,7 @@
   flex-direction: column;
   margin-bottom: $spacing-md;
   input {
+    background: transparent;
     padding: $spacing-sm $spacing-md;
     border: $border-light;
     border-radius: $border-radius-sm;
@@ -44,15 +45,12 @@
 }
 
 input.primary {
-  background: $bg-primary;
   color: $text-primary;
 }
 
 input.secondary {
-  background: $bg-secondary;
   color: $text-secondary;
 }
 input.tertiary {
-  background: $bg-elevated;
   color: $text-primary;
 }

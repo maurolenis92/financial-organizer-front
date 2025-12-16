@@ -1,82 +1,59 @@
 <div class="login-page">
-  <!-- Background decoration -->
-  <div class="bg-decoration">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
-  </div>
-
-  <!-- Login container -->
-  <div class="login-container">
-    <!-- Logo section -->
-    <div class="login-logo">
-      <div class="logo-icon">
-        <img src="../../../../assets/icons/icon.svg" alt="finan-icon" />
-      </div>
-      <h1 class="logo-title">FinanSmart</h1>
-      <p class="logo-subtitle">Tu aliado financiero personal</p>
-    </div>
-
-    <!-- Login card -->
-    <div class="login-card">
-      <div class="card-header">
-        <h2 class="card-title">Iniciar Sesión</h2>
-        <p class="card-subtitle">Ingresa tus credenciales para continuar</p>
-      </div>
-
-      <!-- Login form -->
-      <form [formGroup]="form" (ngSubmit)="login()" class="login-form">
-        <!-- Email input -->
-        <fs-input
-          label="Correo electrónico"
-          type="text"
-          formControlName="username"
-          id="username"
-          placeholder="tu@email.com"
-          [width]="'100%'"
-        ></fs-input>
-
-        <!-- Password input -->
+  <div class="login-page__card">
+    <h1>Bienvenido a FinanSmart</h1>
+    <span>Ingresa tus credenciales para continuar</span>
+    <form class="login-page__form" [formGroup]="form">
+      <fs-input
+        width="100"
+        label="Correo electrónico"
+        type="text"
+        id="username"
+        width="100%"
+        formControlName="username"
+        placeholder="Digita tu correo electrónico"
+      ></fs-input>
+      <div class="login-page__password-field">
         <fs-input
           label="Contraseña"
-          type="password"
-          formControlName="password"
+          [type]="hidePassword ? 'password' : 'text'"
           id="password"
-          placeholder="Ingresa tu contraseña"
-          [width]="'100%'"
-        ></fs-input>
-
-        <!-- Forgot password link -->
-        <div class="forgot-password">
-          <a (click)="goToResetPassword()" class="link">¿Olvidaste tu contraseña?</a>
-        </div>
-
-        @if (errorMessage) {
-          <span class="error-message">
-            {{ errorMessage }}
-          </span>
-        }
-
-        <!-- Submit button -->
-        <fs-button
-          [disabled]="buttonDisabled"
-          [loading]="loading"
-          label="Ingresar"
-          (click)="login()"
+          width="100%"
+          placeholder="Digita tu contraseña"
+          formControlName="password"
+        >
+        </fs-input>
+        <button
+          class="toggle-visibility-btn"
           type="button"
-          variant="primary"
-        ></fs-button>
-      </form>
-      <div class="auth-links">
-        <span>
-          ¿No tienes una cuenta? <a (click)="goToSignUp()" class="link">Crear Cuenta</a>
-        </span>
+          (click)="togglePasswordVisibility()"
+          id="btn-pass-visibility"
+        >
+          <span class="material-icons">{{
+            hidePassword ? 'visibility' : 'visibility_off'
+          }}</span>
+        </button>
       </div>
-    </div>
-
-    <!-- Footer -->
-    <div class="login-footer">
-      <p class="footer-text">© 2025 FinanSmart - Gestión financiera inteligente</p>
-    </div>
+      @if (errorMessage) {
+        <div class="login-page__error">{{ errorMessage }}</div>
+      }
+      <a
+        id="forgot-password-link"
+        (click)="goToResetPassword()"
+        class="link login-page__link"
+        >¿Olvidaste tu contraseña?</a
+      >
+      <fs-button
+        [disabled]="buttonDisabled"
+        [loading]="loading"
+        (click)="login()"
+        type="button"
+        id="btn-icon"
+        label="Ingresar"
+      ></fs-button>
+    </form>
+    <span>
+      No tienes una cuenta?
+      <a id="sign-up-link" class="link" (click)="goToSignUp()">Crear una cuenta</a>
+    </span>
   </div>
 </div>

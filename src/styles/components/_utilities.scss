@@ -7,11 +7,10 @@
 // Card genérica dark
 .card {
   background: $bg-tertiary;
-  border: $border-light;
+  border: 1px solid $gray-700;
   border-radius: $border-radius-lg;
   padding: $spacing-lg;
   box-shadow: $shadow-md;
-  backdrop-filter: blur(10px);
 
   &--elevated {
     background: $bg-elevated;
@@ -43,7 +42,7 @@
 
   &--primary {
     background: $gradient-primary;
-    color: $white;
+    color: $text-inverse;
 
     &:hover {
       transform: translateY(-1px);
@@ -54,7 +53,7 @@
   &--secondary {
     background: $bg-tertiary;
     color: $text-primary;
-    border: $border-medium;
+    border: 1px solid $gray-700;
 
     &:hover {
       background: $bg-elevated;
@@ -68,7 +67,7 @@
     border: 1px solid $primary-color;
 
     &:hover {
-      background: $hover-primary;
+      background: rgba(34, 197, 94, 0.1);
     }
   }
 
@@ -77,7 +76,7 @@
     color: $text-secondary;
 
     &:hover {
-      background: $hover-overlay;
+      background: rgba(255, 255, 255, 0.05);
       color: $text-primary;
     }
   }
@@ -108,11 +107,14 @@
   width: 100%;
   padding: $spacing-md;
   background: $bg-secondary;
-  border: $border-light;
+  border: 1px solid $gray-700;
   border-radius: $border-radius-md;
   color: $text-primary;
   font-size: $font-size-md;
-  transition: all $transition-normal;
+  transition:
+    transform $transition-fast,
+    box-shadow $transition-fast,
+    background-color $transition-fast;
 
   &::placeholder {
     color: $text-muted;
@@ -121,19 +123,19 @@
   &:focus {
     outline: none;
     border-color: $primary-color;
-    box-shadow: $focus-ring;
-    background: $bg-elevated;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+    background: $bg-tertiary;
   }
 
   &:hover:not(:focus) {
-    border-color: $gray-500;
+    border-color: $gray-600;
   }
 
   &--error {
     border-color: $error-color;
 
     &:focus {
-      box-shadow: 0 0 0 3px rgba($error-color, 0.3);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
     }
   }
 
@@ -141,7 +143,7 @@
     border-color: $success-color;
 
     &:focus {
-      box-shadow: 0 0 0 3px rgba($success-color, 0.3);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
     }
   }
 }
@@ -156,33 +158,33 @@
   font-weight: $font-weight-medium;
 
   &--primary {
-    background: rgba($primary-color, 0.2);
-    color: $primary-light;
-    border: 1px solid rgba($primary-color, 0.3);
+    background: rgba(34, 197, 94, 0.15);
+    color: $primary-color;
+    border: 1px solid rgba(34, 197, 94, 0.3);
   }
 
   &--success {
-    background: rgba($success-color, 0.2);
-    color: $success-light;
-    border: 1px solid rgba($success-color, 0.3);
+    background: rgba(16, 185, 129, 0.15);
+    color: $success-color;
+    border: 1px solid rgba(16, 185, 129, 0.3);
   }
 
   &--warning {
-    background: rgba($warning-color, 0.2);
-    color: $warning-light;
-    border: 1px solid rgba($warning-color, 0.3);
+    background: rgba(249, 115, 22, 0.15);
+    color: $warning-color;
+    border: 1px solid rgba(249, 115, 22, 0.3);
   }
 
   &--error {
-    background: rgba($error-color, 0.2);
-    color: $error-light;
-    border: 1px solid rgba($error-color, 0.3);
+    background: rgba(239, 68, 68, 0.15);
+    color: $error-color;
+    border: 1px solid rgba(239, 68, 68, 0.3);
   }
 
   &--neutral {
     background: $bg-tertiary;
     color: $text-secondary;
-    border: $border-light;
+    border: 1px solid $gray-700;
   }
 }
 
@@ -191,7 +193,7 @@
   &-spinner {
     width: 24px;
     height: 24px;
-    border: 2px solid $gray-600;
+    border: 2px solid $gray-700;
     border-top: 2px solid $primary-color;
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -212,9 +214,9 @@
   &-skeleton {
     background: linear-gradient(
       90deg,
-      $bg-tertiary 25%,
-      $bg-elevated 50%,
-      $bg-tertiary 75%
+      $bg-secondary 25%,
+      $bg-tertiary 50%,
+      $bg-secondary 75%
     );
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
@@ -260,7 +262,7 @@
     bottom: 125%;
     left: 50%;
     transform: translateX(-50%);
-    background: $bg-elevated;
+    background: $bg-tertiary;
     color: $text-primary;
     padding: $spacing-xs $spacing-sm;
     border-radius: $border-radius-md;
@@ -268,9 +270,12 @@
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
-    transition: all $transition-normal;
-    border: $border-light;
-    box-shadow: $shadow-md;
+    transition:
+      transform $transition-fast,
+      box-shadow $transition-fast,
+      background-color $transition-fast;
+    border: 1px solid $gray-700;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     z-index: 1000;
   }
 
@@ -281,10 +286,13 @@
     left: 50%;
     transform: translateX(-50%);
     border: 5px solid transparent;
-    border-top-color: $bg-elevated;
+    border-top-color: $bg-tertiary;
     opacity: 0;
     visibility: hidden;
-    transition: all $transition-normal;
+    transition:
+      transform $transition-fast,
+      box-shadow $transition-fast,
+      background-color $transition-fast;
   }
 
   &:hover::before,
@@ -297,7 +305,7 @@
 // Divider
 .divider {
   height: 1px;
-  background: $border-light;
+  background: $gray-800;
   margin: $spacing-lg 0;
 
   &--vertical {
@@ -307,7 +315,7 @@
   }
 
   &--gradient {
-    background: linear-gradient(90deg, transparent, $border-medium, transparent);
+    background: linear-gradient(90deg, transparent, $gray-700, transparent);
   }
 }
 

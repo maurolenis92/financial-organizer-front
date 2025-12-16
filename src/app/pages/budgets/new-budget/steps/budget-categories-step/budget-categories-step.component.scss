@@ -1,6 +1,6 @@
 @import 'abstracts/variables';
 
-.budget-incomes {
+.budget-categories {
   .header {
     display: flex;
     justify-content: space-between;
@@ -10,17 +10,32 @@
     padding-bottom: $spacing-md;
   }
   .content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    max-height: 400px;
+    overflow-y: auto;
     &__row {
-      grid-column: span 2;
-      display: grid;
-      gap: $spacing-md;
+      display: flex;
       align-items: center;
-      grid-template-columns: 4fr 3fr 1fr;
+      gap: $spacing-md;
+      padding: $spacing-lg;
+      border: $border-light;
+      border-radius: $border-radius-md;
+      background: $bg-secondary;
+    }
+    &__icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    button {
+      margin-left: auto;
     }
     &__empty {
-      grid-column: span 2;
       text-align: center;
       color: $text-secondary;
       margin: $spacing-xl 0;

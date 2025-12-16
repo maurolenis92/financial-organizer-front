@@ -1,214 +1,90 @@
-@if (budgetDetail) {
-  <div class="budget-detail">
-    <!-- Header -->
-    <div class="budget-detail__header">
-      <div class="budget-detail__header-top">
-        <button class="back-button" (click)="goBack()">
-          <span class="material-icons">arrow_back</span>
-        </button>
-        <div class="budget-detail__title-section">
-          <h1>{{ budgetDetail.name }}</h1>
-          <span class="budget-detail__badge" [attr.data-status]="getStatus(budgetDetail)">
-            {{ getStatusLabel(budgetDetail) }}
-          </span>
-        </div>
-      </div>
-      <div class="budget-detail__header-info">
-        <div class="info-item">
-          <span class="material-icons">event</span>
-          <span
-            >{{ budgetDetail.startDate | date: 'dd/MM/yyyy' }} -
-            {{ budgetDetail.endDate | date: 'dd/MM/yyyy' }}</span
-          >
-        </div>
-        <div class="info-item">
-          <span class="material-icons">payments</span>
-          <span>{{ budgetDetail.currency }}</span>
-        </div>
-        <div class="info-item">
-          <span class="material-icons">schedule</span>
-          <span>{{ getRemainingDays(budgetDetail) }} días restantes</span>
-        </div>
-      </div>
-    </div>
+<div class="budget-detail">
+  @if (budgetDetail) {
+    <h1>{{ budgetDetail.name }}</h1>
 
-    <!-- Stats Cards -->
-    <div class="budget-detail__stats">
-      <div class="stat-card stat-card--income">
-        <div class="stat-card__icon">
-          <span class="material-icons">trending_up</span>
-        </div>
-        <div class="stat-card__content">
-          <span class="stat-card__label">Total Ingresos</span>
-          <span class="stat-card__value">
-            {{ totalIncomes | currency: budgetDetail.currency : 'symbol-narrow' }}
-          </span>
-        </div>
-      </div>
-
-      <div class="stat-card stat-card--expense">
-        <div class="stat-card__icon">
-          <span class="material-icons">trending_down</span>
-        </div>
-        <div class="stat-card__content">
-          <span class="stat-card__label">Total Gastos</span>
-          <span class="stat-card__value">
-            {{ totalExpenses | currency: budgetDetail.currency : 'symbol-narrow' }}
-          </span>
-        </div>
-      </div>
-
-      <div class="stat-card stat-card--expected">
-        <div class="stat-card__icon">
-          <span class="material-icons">calculate</span>
-        </div>
-        <div class="stat-card__content">
-          <span class="stat-card__label">Disponible Esperado</span>
-          <span class="stat-card__value">
-            {{ availableExpected | currency: budgetDetail.currency : 'symbol-narrow' }}
-          </span>
-        </div>
-      </div>
-
-      <div class="stat-card stat-card--available">
-        <div class="stat-card__icon">
-          <span class="material-icons">account_balance_wallet</span>
-        </div>
-        <div class="stat-card__content">
-          <span class="stat-card__label">Disponible Actual</span>
-          <span class="stat-card__value">
-            {{ availableAmount | currency: budgetDetail.currency : 'symbol-narrow' }}
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tabs -->
-    <mat-tab-group class="budget-detail__tabs" (selectedTabChange)="tabChanged($event)">
-      <mat-tab label="Todo">
-        <div class="tab-content">
-          <!-- Filtro por Categorías -->
-          <div class="categories-filter">
-            <h3>Filtrar por categoría</h3>
-            <mat-chip-listbox>
-              @for (item of categories(); track $index) {
-                <mat-chip-option
-                  [value]="item.id"
-                  (selectionChange)="categorieChange($event, item)"
-                >
-                  <span class="material-icons">{{ item.icon }}</span>
-                  {{ item.name }}
-                </mat-chip-option>
-              }
-            </mat-chip-listbox>
+    <div class="budget-detail__content">
+      <div class="budget-detail__content__column">
+        <div class="budget-detail__content__card">
+          <div class="card-header">
+            <span>Monto disponible</span>
+            <span class="material-icons">account_balance_wallet</span>
           </div>
-
-          <!-- Ingresos y Gastos -->
-          <div class="overview-grid">
-            <!-- Ingresos -->
-            <div class="overview-card overview-card--incomes">
-              <div class="overview-card__header">
-                <span class="material-icons">add_circle</span>
-                <h3>Ingresos</h3>
-                <span class="overview-card__count">{{
-                  budgetDetail.incomes.length || 0
-                }}</span>
-              </div>
-              <div class="overview-card__list">
-                @for (item of budgetDetail.incomes; track $index) {
-                  <div class="list-item">
-                    <div class="list-item__info">
-                      <span class="material-icons list-item__icon">paid</span>
-                      <span class="list-item__concept">{{ item.concept }}</span>
-                    </div>
-                    <span class="list-item__amount list-item__amount--income">
-                      {{
-                        item.amount | currency: budgetDetail.currency : 'symbol-narrow'
-                      }}
-                    </span>
-                  </div>
-                } @empty {
-                  <div class="empty-state">
-                    <span class="material-icons">info</span>
-                    <p>No hay ingresos registrados</p>
-                  </div>
-                }
-              </div>
-            </div>
-
-            <!-- Gastos -->
-            <div class="overview-card overview-card--expenses">
-              <div class="overview-card__header">
-                <span class="material-icons">remove_circle</span>
-                <h3>Gastos</h3>
-                <span class="overview-card__count">{{ expenses.length || 0 }}</span>
-              </div>
-
-              <!-- Leyenda de estados -->
-              <div class="expense-legend">
-                <div class="legend-item">
-                  <span class="legend-dot legend-dot--pending"></span>
-                  <span class="legend-label">Pendiente</span>
-                </div>
-                <div class="legend-item">
-                  <span class="legend-dot legend-dot--paid"></span>
-                  <span class="legend-label">Pagado</span>
-                </div>
-              </div>
-
-              <div class="overview-card__list">
-                @for (item of expenses; track $index) {
-                  <div class="list-item">
-                    <div class="list-item__info">
-                      <span class="material-icons list-item__icon">{{
-                        getCategoryIcon(item.categoryId)
-                      }}</span>
-                      <span class="list-item__concept">{{ item.concept }}</span>
-                    </div>
-                    <span
-                      class="list-item__amount"
-                      [attr.data-status]="getExpenseStatus(item.status)"
-                    >
-                      {{
-                        item.amount | currency: budgetDetail.currency : 'symbol-narrow'
-                      }}
-                    </span>
-                  </div>
-                } @empty {
-                  <div class="empty-state">
-                    <span class="material-icons">info</span>
-                    <p>No hay gastos registrados</p>
-                  </div>
-                }
-              </div>
-            </div>
+          <h2>
+            {{
+              availableAmount
+                | currency: budgetDetail.currency : 'symbol-narrow' : '1.2-2'
+            }}
+          </h2>
+        </div>
+        <div class="budget-detail__content__card">
+          <div class="card-header">
+            <span>Disponible esperado</span>
+            <span class="material-icons">savings</span>
           </div>
+          <h2>
+            {{
+              availableExpected
+                | currency: budgetDetail.currency : 'symbol-narrow' : '1.2-2'
+            }}
+          </h2>
+          <span class="caption">Proyectado despues de pagar</span>
         </div>
-      </mat-tab>
-
-      <mat-tab label="Ingresos (Editar)">
-        <div class="tab-content">
-          <app-incomes-detail [form]="getFormArray('incomes')"></app-incomes-detail>
+        <div class="budget-detail__content__card">
+          <div class="card-header">
+            <span>Dias restantes</span>
+            <span class="material-icons">calendar_today</span>
+          </div>
+          <h2>{{ budgetDetail.daysRemaining }}</h2>
         </div>
-      </mat-tab>
-
-      <mat-tab label="Gastos (Editar)">
-        <div class="tab-content">
+        <div class="budget-detail__content__card">
+          <div class="card-header">
+            <span>Presupuesto usado</span>
+            <span>{{ budgetDetail.percentageUsed }}%</span>
+          </div>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="budgetDetail.percentageUsed"
+          ></mat-progress-bar>
+        </div>
+        <fs-button
+          [disabled]="loading"
+          label="Agregar ingreso"
+          icon="add"
+          (click)="addItem(true)"
+        ></fs-button>
+        <fs-button
+          [disabled]="loading"
+          label="Agregar gasto"
+          icon="add"
+          variant="secondary"
+          (click)="addItem(false)"
+        ></fs-button>
+        <fs-button
+          [loading]="loading"
+          label="Guardar cambios"
+          icon="save"
+          variant="tertiary"
+          (click)="updateBudget()"
+        ></fs-button>
+      </div>
+      <div class="budget-detail__content__column right-column">
+        <div class="budget-detail__content__card">
+          <app-incomes-detail
+            [incomes]="budgetDetail.incomes"
+            [totalIncomes]="totalIncomes"
+            [currency]="budgetDetail.currency"
+            (deleteIncome)="calculateTotals()"
+          ></app-incomes-detail>
+        </div>
+        <div class="budget-detail__content__card">
           <app-expenses-detail
-            [form]="getFormArray('expenses')"
+            [expenses]="budgetDetail.expenses"
+            [totalExpenses]="totalExpenses"
             [categories]="categories()"
+            (update)="calculateTotals()"
           ></app-expenses-detail>
         </div>
-      </mat-tab>
-
-      <mat-tab label="Reportes">
-        <div class="tab-content">
-          <div class="empty-state">
-            <span class="material-icons">assessment</span>
-            <p>Reportes próximamente</p>
-          </div>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
-}
+      </div>
+    </div>
+  }
+</div>

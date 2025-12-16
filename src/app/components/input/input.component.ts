@@ -1,8 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, Optional, Self } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  FormsModule,
+  NgControl,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { ValidatorValue } from '../../models/validator-value';
 import { getErrorMessage } from '../../utils/custom-validators';
+import { NgxCurrencyDirective } from 'ngx-currency';
 
 // TODO: ESLint Adjustments Required - Este archivo está temporalmente excluido de ESLint
 // Para habilitar ESLint nuevamente, realizar los siguientes ajustes:
@@ -15,7 +22,7 @@ import { getErrorMessage } from '../../utils/custom-validators';
 @Component({
   selector: 'fs-input',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxCurrencyDirective, FormsModule, ReactiveFormsModule],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
 })
@@ -25,8 +32,11 @@ export class InputComponent implements ControlValueAccessor, OnInit {
   @Input() public placeholder: string = '';
   @Input() public id: string = '';
   @Input() public width: string = '100%';
+  @Input() public currencyMask: boolean = false;
+  @Input() public currencyFormat: string = 'COP';
   @Input() public valueValidator: ValidatorValue = {};
   @Input() public variant: 'primary' | 'secondary' | 'tertiary' = 'primary';
+  internalControl!: FormControl;
 
   public disabled: boolean = false;
   public value: string = '';
@@ -40,11 +50,30 @@ export class InputComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.currencyMask && this.ngControl?.control) {
+      this.internalControl = this.ngControl.control as FormControl;
+    }
+  }
+
+  public get currencyOptions() {
+    return {
+      prefix: this.getCurrencyPrefix(),
+      thousands: this.getCurrencyThousands(),
+      decimal: this.getCurrencyDecimal(),
+      align: 'left',
+      allowNegative: false,
+      precision: 2,
+    };
+  }
 
   // Implementación de ControlValueAccessor
   public writeValue(value: any): void {
     this.value = value || '';
+
+    if (this.currencyMask && this.internalControl) {
+      this.internalControl.setValue(value, { emitEvent: false });
+    }
   }
 
   public registerOnChange(fn: any): void {
@@ -98,5 +127,38 @@ export class InputComponent implements ControlValueAccessor, OnInit {
     }
     error = getErrorMessage(Object.keys(this.control.errors)[0], this.valueValidator);
     return error;
+  }
+
+  private getCurrencyPrefix(): string {
+    const prefixes: { [key: string]: string } = {
+      USD: '$',
+      COP: '$',
+      EUR: '€',
+      GBP: '£',
+      MXN: '$',
+    };
+    return prefixes[this.currencyFormat] || '$';
+  }
+
+  private getCurrencyThousands(): string {
+    const separators: { [key: string]: string } = {
+      USD: ',',
+      COP: '.',
+      EUR: '.',
+      GBP: ',',
+      MXN: ',',
+    };
+    return separators[this.currencyFormat] || ',';
+  }
+
+  private getCurrencyDecimal(): string {
+    const decimals: { [key: string]: string } = {
+      USD: '.',
+      COP: ',',
+      EUR: ',',
+      GBP: '.',
+      MXN: '.',
+    };
+    return decimals[this.currencyFormat] || '.';
   }
 }

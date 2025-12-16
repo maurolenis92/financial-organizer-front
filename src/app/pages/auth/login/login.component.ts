@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public loading: boolean = false;
   public buttonDisabled: boolean = true;
   public errorMessage: string = '';
+  public hidePassword: boolean = true;
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -81,6 +82,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   public goToResetPassword(): void {
     this.router.navigate(['/reset-password']);
+  }
+
+  public togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
   }
 
   ngOnDestroy(): void {

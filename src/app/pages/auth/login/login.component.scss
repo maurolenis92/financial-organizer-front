@@ -1,433 +1,52 @@
 @import 'abstracts/variables';
 
-// ========== PAGE CONTAINER (sin scroll) ==========
 .login-page {
-  min-height: 100vh;
   height: 100vh;
-  max-height: 100vh;
-  overflow: hidden;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   background: $bg-primary;
-  position: relative;
-  padding: $spacing-md;
-
-  @media (max-width: $breakpoint-sm) {
-    padding: $spacing-sm $spacing-xs;
-    overflow-y: auto;
-    height: auto;
+  h1 {
+    text-align: center;
   }
-}
-
-.auth-links {
-  text-align: center;
-  margin-top: $spacing-lg;
-  padding-top: $spacing-md;
-  border-top: $border-light;
-
-  @media (max-width: $breakpoint-sm) {
-    margin-top: $spacing-md;
-    padding-top: $spacing-sm;
-  }
-
-  span {
-    margin: $spacing-sm 0;
-    color: $text-secondary;
-    font-size: $font-size-sm;
-
-    @media (max-width: $breakpoint-sm) {
-      font-size: $font-size-xs;
-      margin: $spacing-xs 0;
-    }
-  }
-
-  .link {
-    color: $primary-color;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: $font-weight-medium;
-    transition: all 0.2s ease;
-
-    &:hover {
-      color: $primary-light;
-      text-decoration: underline;
-    }
-
-    @media (max-width: $breakpoint-sm) {
-      font-size: $font-size-sm;
-    }
-  }
-}
-
-// ========== BACKGROUND DECORATION ==========
-.bg-decoration {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 0;
-
-  .shape {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.08;
-    filter: blur(60px);
-
-    &.shape-1 {
-      width: 500px;
-      height: 500px;
-      background: linear-gradient(135deg, $primary-color, $secondary-color);
-      top: -250px;
-      right: -200px;
-      animation: float1 20s ease-in-out infinite;
-
-      @media (max-width: $breakpoint-sm) {
-        width: 300px;
-        height: 300px;
-        top: -150px;
-        right: -100px;
-        filter: blur(40px);
-      }
-    }
-
-    &.shape-2 {
-      width: 400px;
-      height: 400px;
-      background: linear-gradient(135deg, $success-color, $secondary-color);
-      bottom: -200px;
-      left: -150px;
-      animation: float2 18s ease-in-out infinite;
-
-      @media (max-width: $breakpoint-sm) {
-        width: 250px;
-        height: 250px;
-        bottom: -125px;
-        left: -75px;
-        filter: blur(40px);
-      }
-    }
-
-    &.shape-3 {
-      width: 300px;
-      height: 300px;
-      background: linear-gradient(135deg, $secondary-color, $primary-light);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      animation: float3 22s ease-in-out infinite;
-
-      @media (max-width: $breakpoint-sm) {
-        width: 200px;
-        height: 200px;
-        filter: blur(40px);
-      }
-    }
-  }
-}
-
-@keyframes float1 {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  50% {
-    transform: translate(-30px, 30px) rotate(180deg);
-  }
-}
-
-@keyframes float2 {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  50% {
-    transform: translate(40px, -40px) rotate(-180deg);
-  }
-}
-
-@keyframes float3 {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-}
-
-// ========== MAIN CONTAINER ==========
-.login-container {
-  width: 100%;
-  max-width: 420px;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-xl;
-
-  @media (max-width: $breakpoint-sm) {
-    gap: $spacing-md;
-    max-width: 100%;
-  }
-}
-
-// ========== LOGO SECTION ==========
-.login-logo {
-  text-align: center;
-  animation: fadeInDown 0.6s ease-out;
-
-  .logo-icon {
-    display: inline-flex;
-    align-items: center;
+  &__card {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    width: 72px;
-    height: 72px;
-    background: $gradient-primary;
-    border-radius: $border-radius-xl;
-    box-shadow: $shadow-primary;
-    transition: transform $transition-fast;
-
-    &:hover {
-      transform: scale(1.05);
-    }
-
-    @media (max-width: $breakpoint-sm) {
-      width: 56px;
-      height: 56px;
-    }
+    align-items: center;
+    gap: $spacing-lg;
+    padding: $spacing-xxl;
+    background: $bg-secondary;
+    border-radius: $border-radius-md;
   }
-
-  .logo-title {
-    font-size: $font-size-3xl;
-    font-weight: $font-weight-bold;
-    color: $text-primary;
-    margin: 0 0 $spacing-xs 0;
-    letter-spacing: -0.5px;
-
-    @media (max-width: $breakpoint-sm) {
-      font-size: $font-size-2xl;
-    }
+  &__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   }
-
-  .logo-subtitle {
-    font-size: $font-size-sm;
-    color: $text-secondary;
-    margin: 0;
-
-    @media (max-width: $breakpoint-sm) {
-      font-size: $font-size-xs;
-    }
-  }
-}
-
-// ========== LOGIN CARD ==========
-.login-card {
-  background: $bg-secondary;
-  border: $border-light;
-  border-radius: $border-radius-xl;
-  padding: $spacing-xl;
-  box-shadow: $shadow-lg;
-  backdrop-filter: blur(10px);
-  animation: fadeInUp 0.6s ease-out;
-
-  @media (max-width: $breakpoint-sm) {
-    padding: $spacing-lg $spacing-md;
-    border-radius: $border-radius-lg;
-  }
-}
-
-.error-message {
-  color: $error-color;
-  font-size: $font-size-sm;
-  text-align: center;
-}
-
-.card-header {
-  text-align: center;
-  margin-bottom: $spacing-xl;
-
-  .card-title {
-    font-size: $font-size-2xl;
-    font-weight: $font-weight-bold;
-    color: $text-primary;
-    margin: 0 0 $spacing-xs 0;
-
-    @media (max-width: $breakpoint-sm) {
-      font-size: $font-size-xl;
-    }
-  }
-
-  .card-subtitle {
-    font-size: $font-size-sm;
-    color: $text-secondary;
-    margin: 0;
-
-    @media (max-width: $breakpoint-sm) {
-      font-size: $font-size-xs;
-    }
-  }
-
-  @media (max-width: $breakpoint-sm) {
-    margin-bottom: $spacing-lg;
-  }
-}
-
-// ========== FORM ==========
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-lg;
-
-  @media (max-width: $breakpoint-sm) {
-    gap: $spacing-md;
-  }
-}
-
-.forgot-password {
-  text-align: right;
-  margin-top: -$spacing-sm;
-
-  .link {
-    color: $primary-color;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: $font-size-sm;
-    font-weight: $font-weight-medium;
-    transition: all 0.2s ease;
-
-    &:hover {
-      color: $primary-light;
-      text-decoration: underline;
-    }
-
-    @media (max-width: $breakpoint-sm) {
-      font-size: $font-size-xs;
-    }
-  }
-}
-
-// ========== FOOTER ==========
-.login-footer {
-  text-align: center;
-  animation: fadeIn 0.8s ease-out;
-
-  .footer-text {
-    font-size: $font-size-xs;
-    color: $text-muted;
-    margin: 0;
-  }
-}
-
-// ========== ANIMATIONS ==========
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-// ========== RESPONSIVE MOBILE ==========
-@media (max-width: 480px) {
-  .login-page {
-    padding: $spacing-md $spacing-sm;
-  }
-
-  .login-container {
-    gap: $spacing-md;
-  }
-
-  .login-logo {
-    .logo-icon {
-      width: 56px;
-      height: 56px;
-      margin-bottom: $spacing-sm;
-
-      svg {
-        width: 28px;
-        height: 28px;
-      }
-    }
-
-    .logo-title {
-      font-size: $font-size-xl;
-      margin-bottom: $spacing-xs;
-    }
-
-    .logo-subtitle {
-      font-size: $font-size-xs;
-    }
-  }
-
-  .login-card {
-    padding: $spacing-lg;
-    border-radius: $border-radius-lg;
-  }
-
-  .card-header {
+  &__link {
+    align-self: center;
     margin-bottom: $spacing-md;
-
-    .card-title {
-      font-size: $font-size-xl;
-      margin-bottom: $spacing-xs;
-    }
-
-    .card-subtitle {
-      font-size: $font-size-xs;
-    }
   }
-
-  .login-form {
-    gap: $spacing-md;
-  }
-
-  .login-footer {
-    .footer-text {
-      font-size: $font-size-xs;
+  &__password-field {
+    position: relative;
+    display: flex;
+    width: 100%;
+    fs-input {
+      width: 100%;
+    }
+    .toggle-visibility-btn {
+      position: absolute;
+      right: $spacing-sm;
+      bottom: 1.3rem;
+      background: none;
+      color: $text-muted;
     }
   }
-}
-
-// ========== ACCESIBILIDAD ==========
-// .login-form {
-//   fs-input,
-//   fs-button {
-//     &:focus-within {
-//       outline: 2px solid $primary-color;
-//       outline-offset: 2px;
-//       border-radius: $border-radius-md;
-//     }
-//   }
-// }
-
-// ========== MEJORAS DARK MODE ==========
-@media (prefers-color-scheme: dark) {
-  .login-card {
-    background: rgba($bg-secondary, 0.95);
-    box-shadow:
-      $shadow-lg,
-      0 0 0 1px rgba(255, 255, 255, 0.05);
+  &__error {
+    color: $error-color;
+    font-size: $font-size-sm;
+    margin-bottom: $spacing-sm;
+    text-align: center;
   }
 }

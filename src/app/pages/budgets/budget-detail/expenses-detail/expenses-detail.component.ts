@@ -1,101 +1,33 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormArray,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Category } from '../../../../models/user.model';
 import { CommonModule } from '@angular/common';
-import { InputComponent } from '../../../../components/input/input.component';
-import { SelectInputComponent } from '../../../../components/select-input/select-input.component';
-import { ButtonComponent } from '../../../../components/button/button.component';
 import { MatChipsModule } from '@angular/material/chips';
-import { distinctUntilChanged, Subject, takeUntil } from 'rxjs';
-import { SelectOption } from '../../../../models/select.model';
-import { STATUS_OPTIONS } from '../../../../utils/constants/status-option.constant';
+import { Expense } from '../../../../models/budget.model';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-expenses-detail',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    InputComponent,
-    SelectInputComponent,
-    ButtonComponent,
-    MatChipsModule,
-  ],
+  imports: [CommonModule, MatMenuModule, MatChipsModule],
   templateUrl: './expenses-detail.component.html',
   styleUrl: './expenses-detail.component.scss',
 })
-export class ExpensesDetailComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() public form!: FormArray;
+export class ExpensesDetailComponent {
+  @Input() public expenses: Expense[] = [];
   @Input() public categories!: Category[];
-  public formExpense: FormGroup = new FormGroup({
-    concept: new FormControl('', Validators.required),
-    amount: new FormControl('', Validators.required),
-    status: new FormControl('', Validators.required),
-    category: new FormControl('', Validators.required),
-  });
+  @Input() public totalExpenses: number = 0;
+  @Input() public currency!: string;
+  @Output() public update: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  public categoriresOptions: SelectOption[] = [];
-  public statusOptions = STATUS_OPTIONS;
-
-  public buttonDisabled: boolean = true;
-
-  private $destroy: Subject<void> = new Subject<void>();
-
-  ngOnInit(): void {
-    this.categoriresOptions = this.categories.map(category => ({
-      label: category.name,
-      value: category.id,
-    }));
-    this.formExpense.statusChanges
-      .pipe(takeUntil(this.$destroy), distinctUntilChanged())
-      .subscribe(() => {
-        this.buttonDisabled = this.formExpense.status === 'INVALID';
-      });
+  public updateExpense(index: number): void {
+    const expense = this.expenses[index];
+    console.log(expense);
+    expense.status = expense.status === 'PENDING' ? 'PAID' : 'PENDING';
+    this.update.emit(true);
   }
 
-  ngOnChanges(): void {
-    this.categoriresOptions = this.categories.map(category => ({
-      label: category.name,
-      value: category.id,
-    }));
-  }
-
-  public getControls(): AbstractControl[] {
-    return this.form.controls;
-  }
-
-  public getGroup(index: number): FormGroup {
-    return this.form.at(index) as FormGroup;
-  }
-
-  public addExpense(): void {
-    this.form.push(
-      new FormGroup({
-        concept: new FormControl(this.formExpense.get('concept')?.value),
-        amount: new FormControl(Number(this.formExpense.get('amount')?.value)),
-        category: new FormControl(this.formExpense.get('category')?.value),
-        categoryId: new FormControl(this.formExpense.get('category')?.value.value),
-        status: new FormControl(this.formExpense.get('status')?.value.value),
-        id: new FormControl(`temp-${Date.now()}`),
-      })
-    );
-  }
-
-  public removeExpense(index: number): void {
-    this.form.removeAt(index);
-  }
-
-  ngOnDestroy(): void {
-    this.$destroy.next();
-    this.$destroy.complete();
+  public deleteExpense(index: number): void {
+    this.expenses.splice(index, 1);
+    this.update.emit(true);
   }
 }

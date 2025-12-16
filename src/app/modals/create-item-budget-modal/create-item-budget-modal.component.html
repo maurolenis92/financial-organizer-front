@@ -1,0 +1,35 @@
+<div class="create-income-modal">
+  <div class="modal-header">
+    <h2 class="modal-title">Crear Nuevo {{ data.isIncome ? 'Ingreso' : 'Gasto' }}</h2>
+    <button class="close-button" (click)="onCancel()">
+      <span class="material-icons">close</span>
+    </button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <fs-input
+      formControlName="amount"
+      label="Monto del Ingreso"
+      placeholder="Ej: 1000.00"
+      [currencyMask]="true"
+    ></fs-input>
+    <fs-input
+      formControlName="concept"
+      label="Concepto del Ingreso"
+      placeholder="Ej: Salario, Freelance, etc."
+    ></fs-input>
+    @if (!data.isIncome) {
+      <fs-select-input
+        formControlName="status"
+        label="Estado del Gasto"
+        [options]="statusOptions"
+      ></fs-select-input>
+      <fs-select-input
+        formControlName="categoryId"
+        label="Categoria del Gasto"
+        [options]="categoryOptions"
+      ></fs-select-input>
+    }
+    <fs-button type="submit" label="Crear Ingreso" id="btn-save-modal"></fs-button>
+  </form>
+</div>

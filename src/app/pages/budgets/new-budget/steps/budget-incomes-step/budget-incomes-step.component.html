@@ -1,102 +1,29 @@
-<div class="budget-incomes-step">
-  <div class="budget-incomes-step__header">
-    <div class="budget-incomes-step__icon">
-      <mat-icon class="material-icons">attach_money</mat-icon>
-    </div>
-    <div class="budget-incomes-step__title">
-      <h2>Ingresos</h2>
-      <p>Agrega todas las fuentes de ingreso de tu presupuesto</p>
-    </div>
+<div class="budget-incomes">
+  <div class="header">
+    <h3>Fuentes de Ingresos</h3>
+    <fs-button label="Agregar ingreso" icon="add" (click)="addIncome()"></fs-button>
   </div>
-
-  <form [formGroup]="formIncome" class="income-form">
-    <div class="income-form__card">
-      <div class="income-form__header">
-        <mat-icon class="material-icons">add_circle</mat-icon>
-        <h3>Agregar Nuevo Ingreso</h3>
+  <div class="content">
+    @if (getControls().length > 0) {
+      <span>Concepto</span>
+      <span>Monto</span>
+    }
+    @for (item of getControls(); track $index) {
+      <div class="content__row" [formGroup]="getGroup($index)">
+        <fs-input formControlName="concept"></fs-input>
+        <fs-input
+          formControlName="amount"
+          [currencyMask]="true"
+          [currencyFormat]="selectedCurrency"
+        ></fs-input>
+        <!-- TODO: pending replace with fs-button when available -->
+        <button class="delete-btn" type="button" (click)="removeIncome($index)">
+          <span class="material-icons">delete</span>
+        </button>
       </div>
-
-      <div class="income-form__fields">
-        <div class="income-form__field">
-          <fs-input
-            formControlName="amount"
-            label="Monto"
-            type="number"
-            placeholder="0.00"
-          ></fs-input>
-        </div>
-        <div class="income-form__field">
-          <fs-input
-            formControlName="concept"
-            label="Concepto"
-            type="text"
-            placeholder="Ej: Salario, Freelance, Inversiones"
-          ></fs-input>
-        </div>
-      </div>
-
-      <div class="income-form__actions">
-        <fs-button
-          type="button"
-          [disabled]="buttonDisabled"
-          (click)="addIncome()"
-          label="Agregar Ingreso"
-        ></fs-button>
-      </div>
-    </div>
-  </form>
-
-  <div class="income-list">
-    <div class="income-list__header">
-      <h3>Lista de Ingresos</h3>
-      @if (formArray.controls.length > 0) {
-        <span class="income-list__count">{{ formArray.controls.length }} ingreso(s)</span>
-      }
-    </div>
-
-    @if (formArray.controls.length === 0) {
-      <div class="income-list__empty">
-        <div class="empty-state">
-          <mat-icon class="material-icons">money_off</mat-icon>
-          <h4>No hay ingresos aún</h4>
-          <p>Comienza agregando tu primer ingreso usando el formulario de arriba</p>
-        </div>
-      </div>
-    } @else {
-      <div class="income-list__items">
-        @for (item of formArray.controls; track $index) {
-          <div class="income-card">
-            <div class="income-card__icon">
-              <mat-icon class="material-icons">trending_up</mat-icon>
-            </div>
-            <div class="income-card__content">
-              <div class="income-card__header">
-                <span class="income-card__number">Ingreso #{{ $index + 1 }}</span>
-              </div>
-              <div class="income-card__details">
-                <div class="income-card__detail">
-                  <span class="label">Concepto:</span>
-                  <span class="value">{{ item.get('concept')?.value }}</span>
-                </div>
-                <div class="income-card__detail income-card__detail--amount">
-                  <span class="label">Monto:</span>
-                  <span class="value"
-                    >${{ item.get('amount')?.value | number: '1.2-2' }}</span
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="income-card__actions">
-              <button
-                class="btn-icon btn-icon--danger"
-                (click)="removeIncome($index)"
-                type="button"
-              >
-                <mat-icon class="material-icons">delete</mat-icon>
-              </button>
-            </div>
-          </div>
-        }
+    } @empty {
+      <div class="content__empty">
+        <p>No se han agregado ingresos aún. Agrega uno para comenzar.</p>
       </div>
     }
   </div>
