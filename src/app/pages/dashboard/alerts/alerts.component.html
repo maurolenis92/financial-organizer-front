@@ -1,0 +1,15 @@
+<div class="header">
+  <span class="material-icons">warning</span>
+  <h3>Alertas</h3>
+</div>
+<div class="content">
+  @for (item of alerts; track $index) {
+    <div class="content__alert" [ngClass]="item.type">
+      <span class="material-icons-outlined">{{ item.type }}</span>
+      <div class="content__data">
+        <span class="content__data__title"> {{ item.title }}</span>
+        <span class="content__data__description">{{ item.message }}</span>
+      </div>
+    </div>
+  }
+</div>

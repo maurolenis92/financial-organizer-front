@@ -1,0 +1,30 @@
+<div class="header">
+  <span class="material-icons">swap_horiz</span>
+  <h3>Transacciones recientes</h3>
+</div>
+<div class="content">
+  @for (transaction of transactions; track $index) {
+    <div class="content__transaction">
+      <div class="icon-container" [style.backgroundColor]="transaction.categoryColor">
+        <span class="material-icons">{{
+          transaction.categoryIcon ? transaction.categoryIcon : 'attach_money'
+        }}</span>
+      </div>
+      <div class="content__transaction__data">
+        <span class="title">{{ transaction.category }}</span>
+        <span class="message">{{ transaction.timeAgo }}</span>
+      </div>
+      <div
+        class="content__transaction__amount"
+        [ngClass]="{
+          'content__transaction__amount-income': transaction.type === 'income',
+          'content__transaction__amount-expense': transaction.type === 'expense',
+        }"
+      >
+        <span>{{
+          transaction.amount | currency: 'COP' : 'symbol-narrow' : '1.2-2'
+        }}</span>
+      </div>
+    </div>
+  }
+</div>

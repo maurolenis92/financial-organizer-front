@@ -1,0 +1,67 @@
+@import 'abstracts/variables';
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: $spacing-md;
+
+  h3 {
+    margin: 0;
+  }
+
+  .material-icons {
+    color: $info-color;
+    font-size: 2rem;
+  }
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  max-height: 300px;
+  overflow-y: auto;
+  &__transaction {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-sm;
+    border-bottom: $border-light;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .icon-container {
+      width: 40px;
+      height: 40px;
+      border-radius: $border-radius-full;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: $gray-700;
+    }
+
+    &__data {
+      display: flex;
+      flex-direction: column;
+      .title {
+        font-weight: $font-weight-semibold;
+      }
+
+      .message {
+        color: $text-muted;
+      }
+    }
+    &__amount {
+      margin-left: auto;
+      font-weight: $font-weight-semibold;
+      &-income {
+        color: $success-color;
+      }
+      &-expense {
+        color: $error-color;
+      }
+    }
+  }
+}

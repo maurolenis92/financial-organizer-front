@@ -88,7 +88,6 @@ export class BudgetDetailComponent implements OnInit {
             concept: val.concept,
           });
         } else {
-          console.log(val);
           this.budgetDetail.expenses.push({
             id: this.generateTempId(),
             amount: val.amount,

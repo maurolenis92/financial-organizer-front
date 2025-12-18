@@ -1,0 +1,33 @@
+@import 'abstracts/variables';
+
+.active-budgets {
+  &__total {
+    display: flex;
+    align-items: start;
+    grid-column: span 12;
+    gap: $spacing-sm;
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: $spacing-xs;
+      border-radius: $border-radius-full;
+      background: $hover-overlay;
+      width: 30px;
+      height: 30px;
+    }
+  }
+  &__content {
+    display: flex;
+    gap: $spacing-md;
+    max-width: 100%;
+    overflow-x: auto;
+    &__item {
+      border-radius: $border-radius-md;
+      background: $bg-secondary;
+      padding: $spacing-md;
+      box-shadow: $shadow-md;
+      width: 100%;
+    }
+  }
+}

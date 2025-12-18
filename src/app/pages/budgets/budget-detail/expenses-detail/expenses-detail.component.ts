@@ -21,7 +21,6 @@ export class ExpensesDetailComponent {
 
   public updateExpense(index: number): void {
     const expense = this.expenses[index];
-    console.log(expense);
     expense.status = expense.status === 'PENDING' ? 'PAID' : 'PENDING';
     this.update.emit(true);
   }

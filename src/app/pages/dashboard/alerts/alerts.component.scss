@@ -1,0 +1,75 @@
+@import 'abstracts/variables';
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: $spacing-md;
+
+  h3 {
+    margin: 0;
+  }
+
+  .material-icons {
+    color: $warning-color;
+    font-size: 2rem;
+  }
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  max-height: 300px;
+  overflow-y: auto;
+  &__alert {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+    padding: $spacing-sm;
+    border: $border-light;
+    border-radius: $border-radius-md;
+    .material-icons-outlined {
+      border-radius: $border-radius-lg;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: $spacing-md;
+    }
+    &.warning {
+      border-color: $warning-light;
+      background-color: rgba($warning-light, 0.1);
+      .material-icons-outlined {
+        color: $warning-light;
+        background-color: rgba($warning-light, 0.1);
+      }
+    }
+    &.info {
+      border-color: $info-light;
+      background-color: rgba($info-light, 0.1);
+      .material-icons-outlined {
+        color: $info-light;
+        background-color: rgba($info-light, 0.1);
+      }
+    }
+    &.error {
+      border-color: $error-light;
+      background-color: rgba($error-light, 0.1);
+      .material-icons-outlined {
+        color: $error-light;
+        background-color: rgba($error-light, 0.1);
+      }
+    }
+  }
+  &__data {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    &__title {
+      font-weight: $font-weight-medium;
+    }
+    &__description {
+      font-size: $font-size-sm;
+      color: $text-muted;
+    }
+  }
+}

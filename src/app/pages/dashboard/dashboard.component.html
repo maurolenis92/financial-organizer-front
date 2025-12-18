@@ -1,1 +1,93 @@
-<p>dashboard works!</p>
+<div class="dashboard">
+  @if (dashboardInformation) {
+    <div class="dashboard__header">
+      <div class="dashboard__title">
+        <h1>Dashboard</h1>
+        <span>Resumen financiero de todos tus presupuestos del mes</span>
+      </div>
+      <div class="dashboard__period">
+        <span class="material-icons">calendar_month</span>
+        <span>{{ monthName | titlecase }} {{ dashboardInformation.period.year }}</span>
+      </div>
+    </div>
+    <div class="dashboard__content">
+      <div class="dashboard__item dashboard__content__balance">
+        <div class="icon-container income">
+          <span class="material-icons">payments</span>
+        </div>
+        <span class="label">Total ingresos</span>
+        <span class="amount">{{
+          dashboardInformation.summary.totalIncome
+            | currency: 'COP' : 'symbol-narrow' : '1.2-2'
+        }}</span>
+      </div>
+      <div class="dashboard__item dashboard__content__balance">
+        <div class="icon-container expense">
+          <span class="material-icons">shopping_cart</span>
+        </div>
+        <span class="label">Total egresos</span>
+        <span class="amount">{{
+          dashboardInformation.summary.totalExpenses
+            | currency: 'COP' : 'symbol-narrow' : '1.2-2'
+        }}</span>
+      </div>
+      <div class="dashboard__item dashboard__content__balance">
+        <div class="icon-container balance">
+          <span class="material-icons">account_balance_wallet</span>
+        </div>
+        <span class="label">Disponible</span>
+        <span class="amount">{{
+          dashboardInformation.summary.available
+            | currency: 'COP' : 'symbol-narrow' : '1.2-2'
+        }}</span>
+      </div>
+
+      <div class="dashboard__item dashboard__content__category-chart">
+        <h3>Gastos por categoría</h3>
+        @if (pieChartOptions) {
+          <apx-chart
+            [series]="pieChartOptions.series!"
+            [chart]="pieChartOptions.chart!"
+            [labels]="pieChartOptions.labels!"
+            [colors]="pieChartOptions.colors!"
+            [legend]="pieChartOptions.legend!"
+            [dataLabels]="pieChartOptions.dataLabels!"
+            [responsive]="pieChartOptions.responsive!"
+          >
+          </apx-chart>
+        }
+      </div>
+      <div class="dashboard__item dashboard__content__trends-chart">
+        <h3>Tendencia</h3>
+        @if (lineChartOptions) {
+          <apx-chart
+            [series]="lineChartOptions.series!"
+            [chart]="lineChartOptions.chart!"
+            [xaxis]="lineChartOptions.xaxis!"
+            [yaxis]="lineChartOptions.yaxis!"
+            [stroke]="lineChartOptions.stroke!"
+            [colors]="lineChartOptions.colors!"
+            [dataLabels]="lineChartOptions.dataLabels!"
+            [grid]="lineChartOptions.grid!"
+          >
+          </apx-chart>
+        }
+      </div>
+      <div class="dashboard__content__active-budgets">
+        <app-active-budgets
+          [budgets]="dashboardInformation.activeBudgets"
+        ></app-active-budgets>
+      </div>
+      <div class="dashboard__item dashboard__content__alerts">
+        <app-alerts [alerts]="dashboardInformation.alerts"></app-alerts>
+      </div>
+      <div class="dashboard__item dashboard__content__transactions">
+        <app-transactions
+          [transactions]="dashboardInformation.recentTransactions"
+        ></app-transactions>
+      </div>
+    </div>
+  } @else {
+    <p>Cargando información del dashboard...</p>
+  }
+</div>
