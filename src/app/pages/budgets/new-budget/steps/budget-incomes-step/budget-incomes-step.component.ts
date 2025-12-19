@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -13,6 +13,8 @@ import { InputComponent } from '../../../../../components/input/input.component'
 import { ButtonComponent } from '../../../../../components/button/button.component';
 import { MatIconModule } from '@angular/material/icon';
 import { scrollToTop } from '../../../../../utils/functions.util';
+import { Subject, takeUntil } from 'rxjs';
+import { ScreenSizeService } from '../../../../../../services/screen-size.service';
 
 @Component({
   selector: 'app-budget-incomes-step',
@@ -28,9 +30,18 @@ import { scrollToTop } from '../../../../../utils/functions.util';
   templateUrl: './budget-incomes-step.component.html',
   styleUrl: './budget-incomes-step.component.scss',
 })
-export class BudgetIncomesStepComponent implements OnInit {
+export class BudgetIncomesStepComponent implements OnInit, OnDestroy {
   @Input() public formArray!: FormArray;
   @Input() public selectedCurrency: string = 'COP';
+  public isMobile: boolean = false;
+  private destroy$: Subject<void> = new Subject<void>();
+  private screenSizeService = inject(ScreenSizeService);
+
+  constructor() {
+    this.screenSizeService.screenSize$.pipe(takeUntil(this.destroy$)).subscribe(size => {
+      this.isMobile = size.isMobile || size.isTablet;
+    });
+  }
 
   ngOnInit(): void {
     scrollToTop();
@@ -55,5 +66,10 @@ export class BudgetIncomesStepComponent implements OnInit {
 
   public removeIncome(index: number): void {
     this.formArray.removeAt(index);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

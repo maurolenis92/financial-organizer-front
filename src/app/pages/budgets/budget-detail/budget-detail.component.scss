@@ -1,4 +1,5 @@
 @import 'abstracts/variables';
+@import 'components/utilities';
 
 .budget-detail {
   &__content {
@@ -36,6 +37,14 @@
       }
       mat-progress-bar {
         margin-top: $spacing-sm;
+      }
+    }
+  }
+  @include mobile {
+    &__content {
+      grid-template-columns: 1fr;
+      .right-column {
+        grid-column: span 1;
       }
     }
   }

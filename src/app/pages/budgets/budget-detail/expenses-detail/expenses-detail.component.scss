@@ -1,4 +1,5 @@
 @import 'abstracts/variables';
+@import 'components/utilities';
 
 .expenses-detail {
   &__header {
@@ -68,6 +69,35 @@
         font-size: $font-size-md;
         font-weight: bold;
         color: $primary-color;
+      }
+    }
+  }
+  @include mobile {
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-sm;
+      &__total {
+        margin-left: 0;
+      }
+    }
+    &__content {
+      &__item {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        &__status {
+          grid-column: span 2;
+          margin-left: 0;
+        }
+        &__description {
+          padding-right: 25px;
+        }
+        button {
+          position: absolute;
+          top: $spacing-sm;
+          right: 0;
+        }
       }
     }
   }

@@ -1,4 +1,5 @@
 @import 'abstracts/variables';
+@import 'components/utilities';
 
 .budgets {
   padding: $spacing-xl;
@@ -321,45 +322,25 @@
   }
 }
 
-@media (max-width: 1200px) {
-  .budgets__cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
+@include mobile {
   .budgets {
-    padding: $spacing-sm;
-
+    padding: 0;
     &__header {
       flex-direction: column;
       align-items: flex-start;
       gap: $spacing-md;
     }
-
-    &__filter {
-      grid-template-columns: 1fr;
-      padding: $spacing-md;
-    }
-
     &__cards {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(1, minmax(0, 1fr));
       gap: $spacing-md;
     }
   }
-
   .budget-card {
     padding: $spacing-md;
-
     &__header {
       gap: $spacing-sm;
       padding-bottom: $spacing-sm;
     }
-
-    &__stats {
-      grid-template-columns: 1fr;
-    }
-
     &__footer {
       flex-direction: column;
       align-items: stretch;

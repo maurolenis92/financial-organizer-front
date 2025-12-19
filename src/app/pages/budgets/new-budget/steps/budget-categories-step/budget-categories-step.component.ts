@@ -38,7 +38,7 @@ export class BudgetCategoriesStepComponent implements OnInit {
   public addCategory(): void {
     const dialogRef = this.dialog.open(CreateCategoryModalComponent, {
       width: '500px',
-      maxWidth: '90vw',
+      maxWidth: '80vw',
       disableClose: false,
       panelClass: 'custom-dialog-container',
     });

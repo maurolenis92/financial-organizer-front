@@ -1,4 +1,5 @@
 @import 'abstracts/variables';
+@import 'components/utilities';
 
 .login-page {
   height: 100vh;
@@ -48,5 +49,11 @@
     font-size: $font-size-sm;
     margin-bottom: $spacing-sm;
     text-align: center;
+  }
+  @include mobile {
+    &__card {
+      padding: $spacing-lg;
+      width: 90%;
+    }
   }
 }
