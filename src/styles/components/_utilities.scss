@@ -318,6 +318,13 @@
     background: linear-gradient(90deg, transparent, $gray-700, transparent);
   }
 }
+@mixin mobile {
+  @media (max-width: $breakpoint-xs),
+    (max-width: $breakpoint-sm),
+    (max-width: $breakpoint-md) {
+    @content;
+  }
+}
 
 // Status indicators
 .status {

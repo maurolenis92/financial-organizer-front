@@ -1,6 +1,26 @@
 <div class="dashboard-layout">
+  <!-- Overlay for mobile -->
+  @if (isMobile) {
+    <div
+      class="dashboard-layout__overlay"
+      [class.show]="isMobile && isSidebarOpen"
+      (click)="toggleSidebar()"
+    ></div>
+  }
+
   <!-- Sidebar -->
+  @if (isMobile && !isSidebarOpen) {
+    <button class="sidebar__toggle" (click)="toggleSidebar()">
+      <span class="material-icons">menu</span>
+    </button>
+  }
+
   <aside class="sidebar" [class.open]="isSidebarOpen">
+    @if (isMobile) {
+      <button class="sidebar__close" (click)="toggleSidebar()">
+        <span class="material-icons">close</span>
+      </button>
+    }
     <div>
       <h2>FinanSmart</h2>
     </div>
@@ -11,6 +31,7 @@
           [routerLink]="['/dashboard' + item.route]"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeSidebar()"
           class="sidebar__item"
         >
           <span class="material-icons">{{ item.icon }}</span>

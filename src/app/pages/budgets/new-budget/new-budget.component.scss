@@ -1,4 +1,5 @@
 @import 'abstracts/variables';
+@import 'components/utilities';
 
 .new-budget {
   display: flex;
@@ -17,6 +18,12 @@
     gap: $spacing-md;
     .back-btn {
       margin-left: auto;
+    }
+    @include mobile {
+      flex-direction: column;
+      .back-btn {
+        margin-left: 0;
+      }
     }
   }
 }

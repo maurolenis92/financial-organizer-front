@@ -4,7 +4,7 @@
     <fs-button label="Agregar gasto" icon="add" (click)="addExpense()"></fs-button>
   </div>
   <div class="content">
-    @if (getControls().length > 0) {
+    @if (getControls().length > 0 && !isMobile) {
       <span>Concepto</span>
       <span>Monto</span>
       <span>Categoría</span>
@@ -12,18 +12,24 @@
     }
     @for (item of getControls(); track $index) {
       <div class="content__row" [formGroup]="getGroup($index)">
-        <fs-input formControlName="concept"></fs-input>
         <fs-input
+          [label]="isMobile ? 'Concepto' : ''"
+          formControlName="concept"
+        ></fs-input>
+        <fs-input
+          [label]="isMobile ? 'Monto' : ''"
           formControlName="amount"
           [currencyMask]="true"
           [currencyFormat]="selectedCurrency"
         ></fs-input>
         <fs-select-input
+          [label]="isMobile ? 'Categoría' : ''"
           formControlName="category"
           [options]="categories"
           placeholder="Categoría"
         ></fs-select-input>
         <fs-select-input
+          [label]="isMobile ? 'Estado' : ''"
           formControlName="status"
           [options]="statuses"
           placeholder="Estado"

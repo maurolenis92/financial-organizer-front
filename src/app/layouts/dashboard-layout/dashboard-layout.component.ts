@@ -1,18 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { BudgetService } from '../../../services/budget.service';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Subject, takeUntil } from 'rxjs';
 import { UserService } from '../../../services/user.service';
 import { ButtonComponent } from '../../components/button/button.component';
-
-interface SidebarItem {
-  label: string;
-  icon: string;
-  route: string;
-  active: boolean;
-}
+import { ScreenSizeService } from '../../../services/screen-size.service';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -21,11 +15,13 @@ interface SidebarItem {
   templateUrl: './dashboard-layout.component.html',
   styleUrl: './dashboard-layout.component.scss',
 })
-export class DashboardLayoutComponent implements OnInit {
+export class DashboardLayoutComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private budgetsService = inject(BudgetService);
   private userService = inject(UserService);
+  private screenSizeService = inject(ScreenSizeService);
   private router = inject(Router);
+  private destroy$: Subject<void> = new Subject<void>();
   public userData = this.userService.userData;
 
   public isSidebarOpen: boolean = false;
@@ -42,6 +38,7 @@ export class DashboardLayoutComponent implements OnInit {
     // { label: 'Reportes', icon: 'bar_chart', route: '/reports', active: false },
     // { label: 'Configuración', icon: 'settings', route: '/settings', active: false },
   ];
+  public isMobile: boolean = false;
 
   ngOnInit(): void {
     // Inicializar datos necesarios al cargar el layout del dashboard
@@ -49,6 +46,10 @@ export class DashboardLayoutComponent implements OnInit {
       this.budgetsService.getBudgets(),
       this.userService.getUserProfile(),
     ]).subscribe();
+
+    this.screenSizeService.screenSize$.pipe(takeUntil(this.destroy$)).subscribe(size => {
+      this.isMobile = size.isMobile || size.isTablet;
+    });
   }
 
   public toggleSidebar(): void {
@@ -59,17 +60,6 @@ export class DashboardLayoutComponent implements OnInit {
     this.isSidebarOpen = false;
   }
 
-  public navigateTo(item: SidebarItem): void {
-    this.items.forEach(i => {
-      if (i !== item) {
-        i.active = false;
-      }
-    });
-    item.active = true;
-    this.router.navigate(['dashboard' + item.route]);
-    this.closeSidebar();
-  }
-
   public async logout(): Promise<void> {
     try {
       await this.authService.signOut();
@@ -77,5 +67,10 @@ export class DashboardLayoutComponent implements OnInit {
     } catch {
       this.router.navigate(['/login']);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

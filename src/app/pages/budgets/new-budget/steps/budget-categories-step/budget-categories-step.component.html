@@ -3,8 +3,8 @@
     <h3>Categorías de Presupuesto</h3>
     <fs-button label="Agregar categoría" icon="add" (click)="addCategory()"></fs-button>
   </div>
+  <h3>Categorías existentes</h3>
   <div class="content">
-    <h3>Categorías existentes</h3>
     @for (item of getControls(); track $index) {
       <div class="content__row">
         <div class="content__icon" [style.background]="item.get('color')?.value">

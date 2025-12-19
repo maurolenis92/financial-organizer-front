@@ -1,4 +1,5 @@
 @import 'abstracts/variables';
+@import 'components/utilities';
 
 .active-budgets {
   &__total {
@@ -22,6 +23,7 @@
     gap: $spacing-md;
     max-width: 100%;
     overflow-x: auto;
+    padding-bottom: $spacing-sm;
     &__item {
       border-radius: $border-radius-md;
       background: $bg-secondary;

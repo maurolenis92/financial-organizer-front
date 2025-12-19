@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, inject, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -17,6 +17,8 @@ import { ButtonComponent } from '../../../../../components/button/button.compone
 import { STATUS_OPTIONS } from '../../../../../utils/constants/status-option.constant';
 import { scrollToTop } from '../../../../../utils/functions.util';
 import { Category } from '../../../../../models/user.model';
+import { Subject, takeUntil } from 'rxjs';
+import { ScreenSizeService } from '../../../../../../services/screen-size.service';
 
 @Component({
   selector: 'app-budget-expenses-step',
@@ -33,13 +35,23 @@ import { Category } from '../../../../../models/user.model';
   templateUrl: './budget-expenses-step.component.html',
   styleUrl: './budget-expenses-step.component.scss',
 })
-export class BudgetExpensesStepComponent implements OnInit, OnChanges {
+export class BudgetExpensesStepComponent implements OnInit, OnChanges, OnDestroy {
   @Input() public formArray!: FormArray;
   @Input() public selectedCurrency: string = 'COP';
   @Input() public categoriesInput: Category[] = [];
 
   public categories: SelectOption[] = [];
   public statuses: SelectOption[] = STATUS_OPTIONS;
+  public isMobile: boolean = false;
+
+  private destroy$: Subject<void> = new Subject<void>();
+  private screenSizeService = inject(ScreenSizeService);
+
+  constructor() {
+    this.screenSizeService.screenSize$.pipe(takeUntil(this.destroy$)).subscribe(size => {
+      this.isMobile = size.isMobile || size.isTablet;
+    });
+  }
 
   ngOnInit(): void {
     scrollToTop();
@@ -72,5 +84,10 @@ export class BudgetExpensesStepComponent implements OnInit, OnChanges {
 
   public removeExpense(index: number): void {
     this.formArray.removeAt(index);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

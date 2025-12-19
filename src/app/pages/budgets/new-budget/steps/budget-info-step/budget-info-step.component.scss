@@ -1,4 +1,5 @@
 @import 'abstracts/variables';
+@import 'components/utilities';
 
 form {
   display: grid;
@@ -6,5 +7,11 @@ form {
   gap: $spacing-lg;
   .name {
     grid-column: span 2;
+  }
+  @include mobile {
+    grid-template-columns: 1fr;
+    .name {
+      grid-column: span 1;
+    }
   }
 }

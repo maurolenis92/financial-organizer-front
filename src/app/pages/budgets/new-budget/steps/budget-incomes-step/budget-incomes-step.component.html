@@ -4,15 +4,19 @@
     <fs-button label="Agregar ingreso" icon="add" (click)="addIncome()"></fs-button>
   </div>
   <div class="content">
-    @if (getControls().length > 0) {
+    @if (getControls().length > 0 && !isMobile) {
       <span>Concepto</span>
       <span>Monto</span>
     }
     @for (item of getControls(); track $index) {
       <div class="content__row" [formGroup]="getGroup($index)">
-        <fs-input formControlName="concept"></fs-input>
+        <fs-input
+          [label]="isMobile ? 'Concepto' : ''"
+          formControlName="concept"
+        ></fs-input>
         <fs-input
           formControlName="amount"
+          [label]="isMobile ? 'Monto' : ''"
           [currencyMask]="true"
           [currencyFormat]="selectedCurrency"
         ></fs-input>

@@ -1,4 +1,5 @@
 @import 'abstracts/variables';
+@import 'components/utilities';
 
 .dashboard {
   display: flex;
@@ -95,5 +96,34 @@
     background: $bg-secondary;
     padding: $spacing-md;
     box-shadow: $shadow-md;
+  }
+
+  @include mobile {
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $spacing-sm;
+    }
+    &__content {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+      &__balance {
+        grid-column: span 1;
+      }
+      &__category-chart {
+        grid-column: span 1;
+      }
+      &__trends-chart {
+        grid-column: span 1;
+      }
+      &__active-budgets {
+        grid-column: span 1;
+      }
+      &__alerts {
+        grid-column: span 1;
+      }
+      &__transactions {
+        grid-column: span 1;
+      }
+    }
   }
 }
