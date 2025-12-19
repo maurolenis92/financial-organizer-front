@@ -28,6 +28,11 @@
     padding: $spacing-sm;
     border: $border-light;
     border-radius: $border-radius-md;
+    cursor: pointer;
+    &:hover {
+      background: $hover-overlay;
+      box-shadow: $hover-overlay;
+    }
     .material-icons-outlined {
       border-radius: $border-radius-lg;
       display: flex;

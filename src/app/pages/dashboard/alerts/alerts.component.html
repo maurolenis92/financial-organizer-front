@@ -4,7 +4,11 @@
 </div>
 <div class="content">
   @for (item of alerts; track $index) {
-    <div class="content__alert" [ngClass]="item.type">
+    <div
+      class="content__alert"
+      [ngClass]="item.type"
+      (click)="navigateToAlertDetails(item.budgetId)"
+    >
       <span class="material-icons-outlined">{{ item.type }}</span>
       <div class="content__data">
         <span class="content__data__title"> {{ item.title }}</span>

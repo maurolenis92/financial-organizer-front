@@ -1,0 +1,16 @@
+<h3>Gastos por categoría</h3>
+@if (pieChartOptions) {
+  <apx-chart
+    [series]="pieChartOptions.series!"
+    [chart]="pieChartOptions.chart!"
+    [labels]="pieChartOptions.labels!"
+    [stroke]="pieChartOptions.stroke!"
+    [plotOptions]="pieChartOptions.plotOptions!"
+    [colors]="pieChartOptions.colors!"
+    [legend]="pieChartOptions.legend!"
+    [dataLabels]="pieChartOptions.dataLabels!"
+    [responsive]="pieChartOptions.responsive!"
+    [tooltip]="pieChartOptions.tooltip!"
+  >
+  </apx-chart>
+}

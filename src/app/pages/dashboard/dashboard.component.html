@@ -43,35 +43,12 @@
       </div>
 
       <div class="dashboard__item dashboard__content__category-chart">
-        <h3>Gastos por categoría</h3>
-        @if (pieChartOptions) {
-          <apx-chart
-            [series]="pieChartOptions.series!"
-            [chart]="pieChartOptions.chart!"
-            [labels]="pieChartOptions.labels!"
-            [colors]="pieChartOptions.colors!"
-            [legend]="pieChartOptions.legend!"
-            [dataLabels]="pieChartOptions.dataLabels!"
-            [responsive]="pieChartOptions.responsive!"
-          >
-          </apx-chart>
-        }
+        <app-category-expenses
+          [expensesByCategory]="dashboardInformation.expensesByCategory"
+        ></app-category-expenses>
       </div>
       <div class="dashboard__item dashboard__content__trends-chart">
-        <h3>Tendencia</h3>
-        @if (lineChartOptions) {
-          <apx-chart
-            [series]="lineChartOptions.series!"
-            [chart]="lineChartOptions.chart!"
-            [xaxis]="lineChartOptions.xaxis!"
-            [yaxis]="lineChartOptions.yaxis!"
-            [stroke]="lineChartOptions.stroke!"
-            [colors]="lineChartOptions.colors!"
-            [dataLabels]="lineChartOptions.dataLabels!"
-            [grid]="lineChartOptions.grid!"
-          >
-          </apx-chart>
-        }
+        <app-trends [monthlyTrend]="dashboardInformation.monthlyTrend"></app-trends>
       </div>
       <div class="dashboard__content__active-budgets">
         <app-active-budgets
