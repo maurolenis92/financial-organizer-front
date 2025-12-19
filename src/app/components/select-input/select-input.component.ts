@@ -50,12 +50,7 @@ export class SelectInputComponent implements ControlValueAccessor {
 
   // Implementación de ControlValueAccessor
   public writeValue(value: any): void {
-    if (typeof value === 'string' || value === null) {
-      this.value = this.options.find(option => option.value === value) || '';
-    }
-    if (typeof value === 'object' && value !== null) {
-      this.value = value.value || '';
-    }
+    this.value = value || '';
   }
 
   public registerOnChange(fn: any): void {

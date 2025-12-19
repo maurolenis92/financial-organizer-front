@@ -45,9 +45,9 @@ export class CreateItemBudgetModalComponent implements OnInit {
       amount: ['', Validators.required],
       concept: ['', Validators.required],
       ...(!this.data.isIncome && {
-        status: [this.statusOptions[0].value, Validators.required],
+        status: [this.statusOptions[0], Validators.required],
         categoryId: [
-          this.categoryOptions.length > 0 ? this.categoryOptions[0].value : '',
+          this.categoryOptions.length > 0 ? this.categoryOptions[0] : '',
           Validators.required,
         ],
         category: [''],

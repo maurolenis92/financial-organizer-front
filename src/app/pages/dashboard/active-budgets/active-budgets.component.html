@@ -1,0 +1,17 @@
+<div class="active-budgets__total">
+  <h3>Presupuestos Activos</h3>
+  <span>{{ budgets.length }}</span>
+</div>
+<div class="active-budgets__content">
+  @for (item of budgets; track $index) {
+    <div class="active-budgets__content__item">
+      <div>
+        <div>
+          <h4>{{ item.name }}</h4>
+          <span>{{ item.startDate | date }} - {{ item.endDate | date }}</span>
+        </div>
+        <span>{{ item.status }}</span>
+      </div>
+    </div>
+  }
+</div>

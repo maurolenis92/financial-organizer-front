@@ -1,0 +1,99 @@
+@import 'abstracts/variables';
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  &__header {
+    display: flex;
+    padding-bottom: $spacing-xs;
+    border-bottom: $border-light;
+    h1 {
+      margin: 0;
+    }
+  }
+  &__title {
+    display: flex;
+    flex-direction: column;
+    margin-right: auto;
+    span {
+      color: $text-muted;
+    }
+  }
+  &__period {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    color: $text-muted;
+    background: $bg-secondary;
+    padding: $spacing-xs $spacing-sm;
+    max-height: 40px;
+    border-radius: $border-radius-md;
+  }
+  &__content {
+    margin-top: $spacing-md;
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: $spacing-md;
+    &__balance {
+      grid-column: span 4;
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+      .label {
+        color: $text-muted;
+      }
+      .amount {
+        font-size: $font-size-xl;
+        font-weight: $font-weight-semibold;
+      }
+      .icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: $border-radius-md;
+        background-color: $hover-overlay;
+        &.income {
+          color: $primary-color;
+          .material-icons {
+            color: $primary-color;
+          }
+        }
+        &.expense {
+          color: $error-light;
+          .material-icons {
+            color: $error-light;
+          }
+        }
+        &.balance {
+          color: $text-primary;
+          .material-icons {
+            color: $text-primary;
+          }
+        }
+      }
+    }
+    &__category-chart {
+      grid-column: span 7;
+    }
+    &__trends-chart {
+      grid-column: span 5;
+    }
+    &__active-budgets {
+      grid-column: span 12;
+    }
+    &__alerts {
+      grid-column: span 6;
+    }
+    &__transactions {
+      grid-column: span 6;
+    }
+  }
+  &__item {
+    border-radius: $border-radius-md;
+    background: $bg-secondary;
+    padding: $spacing-md;
+    box-shadow: $shadow-md;
+  }
+}

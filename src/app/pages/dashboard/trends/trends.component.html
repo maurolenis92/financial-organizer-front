@@ -1,0 +1,15 @@
+<h3>Tendencia</h3>
+@if (lineChartOptions) {
+  <apx-chart
+    [series]="lineChartOptions.series!"
+    [chart]="lineChartOptions.chart!"
+    [xaxis]="lineChartOptions.xaxis!"
+    [yaxis]="lineChartOptions.yaxis!"
+    [stroke]="lineChartOptions.stroke!"
+    [colors]="lineChartOptions.colors!"
+    [dataLabels]="lineChartOptions.dataLabels!"
+    [grid]="lineChartOptions.grid!"
+    [tooltip]="lineChartOptions.tooltip!"
+  >
+  </apx-chart>
+}
