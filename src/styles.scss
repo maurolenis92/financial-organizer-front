@@ -158,7 +158,7 @@ $financial-organizer-front-theme-dark: mat.define-dark-theme(
 // @include mat.slide-toggle-theme($financial-organizer-front-theme-dark);
 // @include mat.slider-theme($financial-organizer-front-theme-dark);
 // @include mat.tooltip-theme($financial-organizer-front-theme-dark);
-// @include mat.snack-bar-theme($financial-organizer-front-theme-dark);
+@include mat.snack-bar-theme($financial-organizer-front-theme-dark);
 // @include mat.card-theme($financial-organizer-front-theme-dark);
 // @include mat.table-theme($financial-organizer-front-theme-dark);
 // @include mat.paginator-theme($financial-organizer-front-theme-dark);
@@ -186,4 +186,19 @@ body {
       box-shadow: none !important;
     }
   }
+}
+
+// ==========================================================================
+// Angular Material Snackbar Custom Styles
+// ==========================================================================
+.snackbar-error {
+  --mdc-snackbar-container-color: #ef4444;
+  --mat-snack-bar-button-color: #ffffff;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+}
+
+.snackbar-success {
+  --mdc-snackbar-container-color: #22c55e;
+  --mat-snack-bar-button-color: #ffffff;
+  --mdc-snackbar-supporting-text-color: #ffffff;
 }

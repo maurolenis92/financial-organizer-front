@@ -15,6 +15,7 @@ import { BudgetService } from '../../../../services/budget.service';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { BudgetCategoriesStepComponent } from './steps/budget-categories-step/budget-categories-step.component';
+import { AlertService } from '../../../../services/alert.service';
 
 interface Step {
   title: string;
@@ -96,6 +97,7 @@ export class NewBudgetComponent implements OnInit {
   private budgetService = inject(BudgetService);
   private $destroy: Subject<void> = new Subject<void>();
   private router = inject(Router);
+  private alertService = inject(AlertService);
   public categories: Category[] = [];
   public buttonDisabled: boolean = true;
 
@@ -200,10 +202,11 @@ export class NewBudgetComponent implements OnInit {
     this.budgetService.createBudget(budgetData).subscribe({
       next: () => {
         this.loading = false;
+        this.alertService.showSuccess('Presupuesto creado exitosamente');
         this.router.navigate(['dashboard/budgets']);
-        // Additional logic after successful budget creation can go here
       },
       error: () => {
+        this.alertService.showError('Error al crear el presupuesto');
         this.loading = false;
       },
     });

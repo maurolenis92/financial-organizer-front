@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { scrollToTop } from '../../../../../utils/functions.util';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateCategoryModalComponent } from '../../../../../modals/create-category-modal/create-category-modal.component';
+import { AlertService } from '../../../../../../services/alert.service';
 
 @Component({
   selector: 'app-budget-categories-step',
@@ -30,6 +31,7 @@ import { CreateCategoryModalComponent } from '../../../../../modals/create-categ
 export class BudgetCategoriesStepComponent implements OnInit {
   @Input() public formArray!: FormArray;
   private dialog = inject(MatDialog);
+  private alertService = inject(AlertService);
 
   ngOnInit(): void {
     scrollToTop();
@@ -58,6 +60,7 @@ export class BudgetCategoriesStepComponent implements OnInit {
             color: new FormControl(result.color),
           })
         );
+        this.alertService.showSuccess('Categoría creada exitosamente.');
       }
     });
   }
@@ -72,5 +75,6 @@ export class BudgetCategoriesStepComponent implements OnInit {
 
   public removeCategory(index: number): void {
     this.formArray.removeAt(index);
+    this.alertService.showSuccess('Categoría eliminada exitosamente.');
   }
 }
