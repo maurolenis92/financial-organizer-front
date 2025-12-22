@@ -12,6 +12,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ButtonComponent } from '../../../components/button/button.component';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateItemBudgetModalComponent } from '../../../modals/create-item-budget-modal/create-item-budget-modal.component';
+import { AlertService } from '../../../../services/alert.service';
 
 @Component({
   selector: 'app-budget-detail',
@@ -33,6 +34,7 @@ export class BudgetDetailComponent implements OnInit {
   private userService = inject(UserService);
   private budgetService = inject(BudgetService);
   private dialog = inject(MatDialog);
+  private alertService = inject(AlertService);
   public budgetDetail!: BudgetDetail;
   public totalIncomes: number = 0;
   public totalExpenses: number = 0;
@@ -127,11 +129,16 @@ export class BudgetDetailComponent implements OnInit {
       return income;
     });
 
-    this.budgetService
-      .updateBudget(this.budgetDetail.id, this.budgetDetail)
-      .subscribe(() => {
+    this.budgetService.updateBudget(this.budgetDetail.id, this.budgetDetail).subscribe({
+      next: () => {
         this.getBudgetDetail();
+        this.alertService.showSuccess('Presupuesto actualizado exitosamente.');
         this.loading = false;
-      });
+      },
+      error: () => {
+        this.loading = false;
+        this.alertService.showError('Error al actualizar el presupuesto.');
+      },
+    });
   }
 }

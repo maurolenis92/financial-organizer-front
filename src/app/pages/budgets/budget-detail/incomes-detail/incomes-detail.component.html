@@ -13,7 +13,7 @@
         <span class="incomes-detail__content__item__amount">{{
           item.amount | currency: currency : 'symbol-narrow' : '1.2-2'
         }}</span>
-        <button class="delete-btn" type="button" (click)="deleteIncomeEntry($index)">
+        <button class="delete-btn" type="button" (click)="confirmDelete($index)">
           <span class="material-icons">delete</span>
         </button>
       </div>

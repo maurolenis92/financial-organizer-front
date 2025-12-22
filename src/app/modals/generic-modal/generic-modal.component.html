@@ -1,0 +1,16 @@
+<div class="generic-modal">
+  <h2>{{ data.title }}</h2>
+  <p>{{ data.message }}</p>
+  <div class="generic-modal__buttons">
+    @if (data.cancelButtonText) {
+      <fs-button
+        variant="secondary"
+        [label]="data.cancelButtonText"
+        (click)="closeModal(true)"
+      ></fs-button>
+    }
+    @if (data.confirmButtonText) {
+      <fs-button [label]="data.confirmButtonText" (click)="closeModal(false)"></fs-button>
+    }
+  </div>
+</div>
